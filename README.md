@@ -1,4 +1,4 @@
-# BoostCore基础加速
+# BoostCore基础加速介绍
 
 # 最新消息
 
