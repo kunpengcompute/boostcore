@@ -10,16 +10,7 @@
 
 # 项目介绍
 
-1.1 概述
-
-
 BoostCore基础加速面向主流应用场景，提供OS及系统软件等基础软件层的加速软件包。例如：KAE硬件加速引擎、KSL系统库的kpglibc。
-
-1.2 架构图——**补充架构图**
-
-
-![](figures/zh-cn_image_0000002503713176.png)
-
 
 # 特性介绍
 
@@ -44,11 +35,11 @@ BoostCore基础加速面向主流应用场景，提供OS及系统软件等基础
 
 | 子库 | 描述 |
 | :--- | :--- |
-| Kzstar（待开源） | 满足ZSTD协议的多线程压缩库。 |
 | [ZSTD](https://gitcode.com/boostkit/zstd) | 基于上游社区源码进行鲲鹏优化适配的补丁仓。 |
 | [Snappy](https://gitcode.com/boostkit/snappy) | 基于上游社区源码进行鲲鹏优化适配的补丁仓。 |
 | [LZ4](https://gitcode.com/boostkit/lz4) | 基于上游社区源码进行鲲鹏优化适配的补丁仓。 |
 | [zlib](https://gitcode.com/boostkit/zlib) | 基于上游社区源码进行鲲鹏优化适配的补丁仓。 |
+<!--| Kzstar（待开源） | 满足ZSTD协议的多线程压缩库。 |-->
 <!--| Gzip | 右对齐 |-->
 
 <!--
@@ -66,8 +57,7 @@ BoostCore基础加速面向主流应用场景，提供OS及系统软件等基础
 |[kpglibc](https://gitcode.com/boostkit/kpglibc) | kpglibc是鲲鹏参与glibc开源社区的仓库，基于华为鲲鹏处理器利用向量化指令集对glibc中的字符串操作函数、内存操作函数和时间操作函数进行性能优化，适用于鲲鹏920新型号处理器、950处理器，推荐使用SVE优化的版本获得更好的性能。函数接口与开源glibc保持一致，接口内部不做完整入参校验，入参合法性及合理性由调用方业务来保证。 |
 | [protobuf](https://gitcode.com/boostkit/protobuf) | 基于上游社区源码进行鲲鹏优化适配的补丁仓。 |
 | [sonic-cpp](https://gitcode.com/boostkit/sonic-cpp) | 基于上游社区源码进行鲲鹏优化适配的补丁仓。 |
-| [KQMalloc](https://gitcode.com/boostkit/kqmalloc) （私仓）| KQMalloc 是专为鲲鹏920系列处理器设计的内存分配器，针对Linux操作系统下4KB和64KB系统页大小、48位内存虚拟地址的系统场景进行了适配与优化。 KQMalloc使用透明大页等技术，可最大限度地减少页表缓冲未命中、降低缓存碎片和缓存别名问题。 该分配器支持单线程和多线程应用场景，可极大地提升应用性能。 |
-| [Hyperscan](https://gitcode.com/boostkit/hyperscan)（私仓） | 基于上游社区源码进行鲲鹏优化及特性开发的项目。 |
+| [KQMalloc](https://gitcode.com/boostkit/boostcore/docs/zh/kqmalloc/README.md) （仅提供文档仓，代码仓待开源）| KQMalloc 是专为鲲鹏920系列处理器设计的内存分配器，针对Linux操作系统下4KB和64KB系统页大小、48位内存虚拟地址的系统场景进行了适配与优化。 KQMalloc使用透明大页等技术，可最大限度地减少页表缓冲未命中、降低缓存碎片和缓存别名问题。 该分配器支持单线程和多线程应用场景，可极大地提升应用性能。 |
 | AVX2KI（待开源） | AVX intrinsic向鲲鹏指令集迁移库。 |
 <!--
 | HTL（待开源） | 基于上游社区源码进行鲲鹏优化适配的补丁仓。 |
@@ -104,6 +94,7 @@ BoostCore基础加速面向主流应用场景，提供OS及系统软件等基础
 | KMML媒体库 | KVCL | 内容 |
 -->
 
+<!--
 ## 其他
 
 | 子库 | 描述 |
@@ -126,9 +117,7 @@ BoostCore基础加速面向主流应用场景，提供OS及系统软件等基础
 | :--- | :--- |
 | [AcclibBenchmark](https://gitcode.com/boostkit/AcclibBenchmark) | 用于存放加速卡领域性能测试脚本。 |
 | [AcclibSkills](https://gitcode.com/boostkit/AcclibSkills) | 用于分享加速库在调试开发过程中，应用效果较好的skills。 |
-
-
-
+-->
 
 # 关于社区
 
