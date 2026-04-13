@@ -1,4 +1,3 @@
-# 目录<a name="ZH-CN_TOPIC_0000002518710796"></a>
 - [项目介绍](./README.md)
 - [版本说明](./release_notes.md)
 - [安装指南](./installation_guide.md)
