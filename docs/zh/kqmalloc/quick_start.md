@@ -15,7 +15,7 @@
 
 ## 环境变量
 
-如<a href="KQMalloc库环境变量说明">**表1** KQMalloc库环境变量说明</a>所示，介绍了KQMalloc库支持的环境变量，用户可根据实际需求进行配置。
+如[**表1** KQMalloc库环境变量说明](#KQMalloc库环境变量说明)所示，介绍了KQMalloc库支持的环境变量，用户可根据实际需求进行配置。
 
 **表 1** KQMalloc库环境变量说明<a id="KQMalloc库环境变量说明"></a>
 
@@ -23,11 +23,11 @@
 | --------- | ------ | ------- | -------- |
 | KQMALLOC_ALIGNMENT | 设置内存对齐大小，单位为字节。 | 4（不兼容C11标准） | 4; 8; 16; 32; 64; 128 |
 | KQMALLOC_C11_COMPLIANT_PROCESSES | 设置兼容C11标准的进程列表，列表中的进程内存对齐大小默认设为16字节。 | 空字符串 | 用":"分隔的进程名称列表，如：java8:java15 |
-| KQMALLOC_SINGLE_THREADED | 设置程序的线程模式 | 常规版本为空（自动检测），slim版本为0。 | 0：单线程模式 </br> 1：多线程模式 |
+| KQMALLOC_SINGLE_THREADED | 设置程序的线程模式 | 常规版本为空（自动检测），slim版本为0。 | 0：单线程模式 <br> 1：多线程模式 |
 | KQMALLOC_SLAB_CACHE_RATIO | 设置为提高性能而缓存的slab最大大小占比。 | 20 | 0-100 |
 | KQMALLOC_LOCAL_CACHE_RATIO | 设置线程本地缓存大小占比 | 100（单线程），75（多线程） | 0-100 |
-| KQMALLOC_USE_THP | 设置是否使用透明大页。 | 1 | 1：使用透明大页 </br> 0：不使用透明大页 </br> -1：不指定 |
-| KQMALLOC_NUMA_AWARE | 设置NUMA感知模式。 | 0（单线程），2（多线程） | 0：禁用NUMA感知 </br> 1：以NUMA节点粒度管理 </br> 2：以CPU插槽粒度管理 |
+| KQMALLOC_USE_THP | 设置是否使用透明大页。 | 1 | 1：使用透明大页 <br> 0：不使用透明大页 <br> -1：不指定 |
+| KQMALLOC_NUMA_AWARE | 设置NUMA感知模式。 | 0（单线程），2（多线程） | 0：禁用NUMA感知 <br> 1：以NUMA节点粒度管理 <br> 2：以CPU插槽粒度管理 |
 | KQMALLOC_TINY_THRESHOLD | 设置微对象大小阈值，单位为字节。 | 65536+CACHE_LINE_SIZE（单线程），512（多线程） | 512-65536+CACHE_LINE_SIZE |
 | KQMALLOC_PROFILER_SECONDS | 设置内存分析时间间隔，单位为秒。（仅在启用内存分析器时有效） | 60.0 | 0-86400.0 |
 | KQMALLOC_PROFILER_EXPONENT | 设置内存分析时间间隔增长率（仅在启用内存分析器时有效）。 | 0.05 | 0-0.25 |

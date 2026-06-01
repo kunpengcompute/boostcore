@@ -32,6 +32,7 @@ void *malloc(size_t size);
 **示例<a name="zh-cn_topic_0000001201850423_section1292577112312"></a>**
 
 1. 编辑示例代码。
+
    ```c
    #include <stdio.h>
    #include <stdlib.h>

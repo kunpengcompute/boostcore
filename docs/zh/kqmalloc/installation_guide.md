@@ -1,8 +1,5 @@
 # 安装指南
 
-- 新版本的KQMalloc已开源，请点击[链接](https://repo.boostkit.osinfra.cn/boostcore/kqmalloc/release/v0.19-beta0/)获取并查看发行版。
-- 旧版本的KQMalloc位于KSL软件安装包[BoostKit-ksl\_2.5.3.zip](https://www.hikunpeng.com/developer/boostkit/library/system?subtab=AVX2KI)，用户解压缩zip文件可获取到RPM安装包。
-
 ## 已验证环境
 
 为保证您可以顺利安全地使用KQMalloc，请确保所使用的环境信息在已验证环境范围内。
@@ -51,9 +48,10 @@ always defer defer+madvise [madvise] never
 ```
 
 ### 使用KQMalloc
+
 KQMalloc通过优化标准库中的内存相关函数，只需使用预加载方式即可生效。
 请根据所使用的鲲鹏处理器型号（HIP08, HIP09, HIP10A, HIP11, HIP12）选择对应的目录下的文件。
-其中libkqmalloc.so是该库的单线程版本；libkqmallocmt.so是该库的多线程版本；libkqmallocmt.debug.so是启用了断言、double free()检查等功能的调试版本；libkqmallocmt.profiler.so是启用了内存分析功能的分析版本，分析文件会保存在/tmp/kqmalloc_<进程名>_CPU<cpu_id>_<ticks>.txt文件中。
+其中libkqmalloc.so是该库的单线程版本；libkqmallocmt.so是该库的多线程版本；libkqmallocmt.debug.so是启用了断言、double free()检查等功能的调试版本；libkqmallocmt.profiler.so是启用了内存分析功能的分析版本，分析文件会保存在/tmp/kqmalloc_<进程名>CPU<cpu_id>.txt文件中。
 
 以鲲鹏HIP12的多线程场景为例：
 
@@ -62,7 +60,7 @@ export LD_PRELOAD=/<path to KQMalloc>/build/HIP12/lib/libkqmallocmt.so
 ```
 
 同样，可以在GCC编译选项中添加动态库所在路径，链接需要使用的动态库文件。
-例如，若需要使用适配HIP12的KQMalloc请在编译时添加：**-L/<path to KQMalloc>/build/HIP12/lib/ -lkqmallocmt -Wl,-rpath=/<path to KQMalloc>/build/HIP12/lib/**
+例如，若需要使用适配HIP12的KQMalloc请在编译时添加：**-L/<KQMalloc路径>/build/HIP12/lib/ -lkqmallocmt -Wl,-rpath=/<KQMalloc路径>/build/HIP12/lib/**
 
 ### 验证KQMalloc
 
