@@ -1,37 +1,36 @@
 # BoostCore基础加速
 
-# 最新消息
+## 最新消息
 
 - \[2026.03.30 \]：系统库新增protobuf、sonic-cpp。
 <!-- \[2025.12.30 \]：系统库新增KACC_JSON；加解密库新增KACC_cropto。-->
 - \[2025.06.30 \]：新增KUAF鲲鹏统一加速框架。
 - \[2024.02.22 \]：KAE鲲鹏加速引擎发布2.0版本。
 
-
-# 项目介绍
+## 项目介绍
 
 BoostCore基础加速面向主流应用场景，提供OS及系统软件等基础软件层的加速软件包。例如：KAE硬件加速引擎、KSL系统库的kpglibc。
 
-# 特性介绍
+## 特性介绍
 
 介绍BoostCore基础加速项目包含的所有基础加速特性的简要介绍，并提供特性仓的地址。
 
-## KAE 鲲鹏加速引擎
+### KAE 鲲鹏加速引擎
 
 | 子库 | 描述 |
 | :--- | :--- |
 | [KAE](https://gitcode.com/boostkit/KAE) | 鲲鹏加速引擎（KAE）是基于鲲鹏处理器提供的硬件加速解决方案，包含了 KAE 加解密和 KAE 解压缩两个模块，分别用于加速 SSL/TLS 应用和数据压缩，可以显著降低处理器消耗，提高处理器效率。此外，加速引擎对应用层屏蔽了其内部实现细节，用户通过 OpenSSL、zlib标准接口即可以实现快速迁移现有业务。 |
-| [KUAF](https://gitcode.com/boostkit/KUAF) | 鲲鹏统一加速框架（KUAF）硬件加速调度框架 |
+| [KUAF](https://gitcode.com/boostkit/KUAF) | 鲲鹏统一加速框架（KUAF）硬件加速调度框架. |
 
 <!--
-## HAAS硬件亲和算子
+### HAAS硬件亲和算子
 
 | 子库 | 描述 |
 | :--- | :--- |
 | HASS（待开源） | HAAS（Hardware Affinitive Acceleration Service）是鲲鹏自研的硬件亲和加速访问框架，对接大数据和搜推AI使用。HAAS通过从鲲鹏BoostKit大数据OmniOperatorJIT和OmniStream中提取基础算子并利用SVE/NEIN进行向量化优化，打造鲲鹏指令清河和原语库。HAAS使用于鲲鹏920新型号处理器，支持NEON指令（128位宽）和SVE指令（256位宽）。 |
 -->
 
-## KZL 压缩库
+### KZL 压缩库
 
 | 子库 | 描述 |
 | :--- | :--- |
@@ -43,14 +42,14 @@ BoostCore基础加速面向主流应用场景，提供OS及系统软件等基础
 <!--| Gzip | 右对齐 |-->
 
 <!--
-## KCL 加解密库
+### KCL 加解密库
 
 | 子库 | 描述 |
 | :--- | :--- |
 | KACC_crypto | 右对齐 |
 -->
 
-## KSL 系统库
+### KSL 系统库
 
 | 子库 | 描述 |
 | :--- | :--- |
@@ -58,7 +57,8 @@ BoostCore基础加速面向主流应用场景，提供OS及系统软件等基础
 | [protobuf](https://gitcode.com/boostkit/protobuf) | 基于上游社区源码进行鲲鹏优化适配的补丁仓。 |
 | [sonic-cpp](https://gitcode.com/boostkit/sonic-cpp) | 基于上游社区源码进行鲲鹏优化适配的补丁仓。 |
 | [KQMalloc](https://gitcode.com/boostkit/boostcore/blob/master/docs/zh/kqmalloc/README.md) （仅提供文档仓，代码仓待开源）| KQMalloc 是专为鲲鹏920系列处理器设计的内存分配器，针对Linux操作系统下4KB和64KB系统页大小、48位内存虚拟地址的系统场景进行了适配与优化。 KQMalloc使用透明大页等技术，可最大限度地减少页表缓冲未命中、降低缓存碎片和缓存别名问题。 该分配器支持单线程和多线程应用场景，可极大地提升应用性能。 |
-| AVX2KI（待开源） | AVX intrinsic向鲲鹏指令集迁移库。 |
+| [AVX2KI](https://gitcode.com/boostkit/avx2ki) | AVX intrinsic向鲲鹏指令集迁移库。 |
+
 <!--
 | HTL（待开源） | 基于上游社区源码进行鲲鹏优化适配的补丁仓。 |
 | KSL_ASN1  | 内容 |
@@ -68,34 +68,28 @@ BoostCore基础加速面向主流应用场景，提供OS及系统软件等基础
 | KVSIP | 内容 |
 -->
 
-<!--
-## KMML 媒体库
+### KMML 媒体库
 
 | 子库 | 描述 |
 | :--- | :--- |
-| KMML媒体库 | HMPP | 内容 |
-| KMML媒体库 | KVCL | 内容 |
+| [HMPP文档](https://gitcode.com/boostkit/boostmedia/blob/master/docs/hmpp/README.md) （仅提供文档仓，代码仓待开源） | HMPP（Hyper Media Performance Primitives，鲲鹏超媒体性能库）是在鲲鹏处理器硬件平台基础上开发的加速库，涉及图像处理、颜色转换、滤波、变换、几何，为计算机视觉运算、向量运算、统计、信号滤波、信号变换和固定精度运算等，通过向量指令集对业务功能提供高性能加速函数接口。 |
+| [KVCL文档](https://gitcode.com/boostkit/boostmedia/blob/master/docs/kvcl/README.md) （仅提供文档仓，代码仓待开源） | 采用向量化指令对视频编码通用基础算子进行优化，结合硬件特性充分利用向量化指令加速，提升算子性能。 |
 
-
-## KAIL 鲲鹏AI算子库
-
-| 子库 | 描述 |
-| :--- | :--- |
-| KAIL鲲鹏AI算子库 | KDNN | 内容 |
-| KSAL存储库 | KVCL | 内容 |
-| KMML媒体库 | KVCL | 内容 |
-
-## KSAL 存储库
+### KAIL AI算子库
 
 | 子库 | 描述 |
 | :--- | :--- |
-| KAIL鲲鹏AI算子库 | KDNN | 内容 |
-| KSAL存储库 | KVCL | 内容 |
-| KMML媒体库 | KVCL | 内容 |
--->
+| [鲲鹏AI算子库文档](https://gitcode.com/boostkit/boostsra/blob/master/docs/zh/kdnn/README.md) （仅提供文档仓，代码仓待开源） | Kunpeng Deep Neural Network Library，鲲鹏深度神经网络算子库，结合鲲鹏处理器微架构特性，通过向量化、汇编、算法优化等手段，提升DNN核心算子性能。 |
+
+### KSAL 存储库
+
+| 子库 | 描述 |
+| :--- | :--- |
+| [ISA-L](https://gitcode.com/boostkit/isa-l) | ISA-L是开源的高性能存储算法库，在开源基础上，通过使用NEON/SVE指令指令、内存预期等手段进一步纠删码、优化循环冗余检查（CRC）。 |
+| [KAE使能SPDK](https://gitcode.com/boostkit/spdk) | SPDK的BDEV设备作为虚拟设备层对接底层多种设备类型（虚拟设备、物理设备），通过在BDEV设备中使能压缩和加解密能够支持所有SPDK设备。 |
 
 <!--
-## 其他
+### 其他
 
 | 子库 | 描述 |
 | :--- | :--- |
@@ -111,7 +105,7 @@ BoostCore基础加速面向主流应用场景，提供OS及系统软件等基础
 | [msgp](https://gitcode.com/boostkit/msgp) | 基于上游社区源码进行鲲鹏优化适配的补丁仓。 |
 | [suricata](https://gitcode.com/boostkit/suricata) | 基于上游社区源码进行鲲鹏优化适配的补丁仓。 |
 
-## 公共配置仓
+### 公共配置仓
 
 | 子库 | 描述 |
 | :--- | :--- |
@@ -119,15 +113,15 @@ BoostCore基础加速面向主流应用场景，提供OS及系统软件等基础
 | [AcclibSkills](https://gitcode.com/boostkit/AcclibSkills) | 用于分享加速库在调试开发过程中，应用效果较好的skills。 |
 -->
 
-# 关于社区
+## 关于社区
 
 提供社区治理架构、SIG组织运作章程、参与贡献、邮件订阅、社媒联系方式等公共模块内容简介和指引。
 
-# 贡献、建议与交流<a name="ZH-CN_TOPIC_0000002503696628"></a>
+## 贡献、建议与交流
 
 欢迎大家为社区做贡献，如果使用过程中有任何问题/建议，或者需要反馈特性需求和bug报告，可以提交[Issues](zh-cn_topic_0000002535534673.md)联系我们，具体贡献方法可参考[这里](https://gitcode.com/boostkit/community/blob/master/docs/contributor/contributing.md)。同时也欢迎大家在[讨论专区](https://gitcode.com/boostkit/community/discussions)展开讨论交流。感谢您的支持。
 
-# LICENSE
+## LICENSE
 
 本项目采用Apache License 2.0许可证。详见[LICENSE](https://gitcode.com/boostkit/cloud-virtual/blob/master/LICENSE)文件。
 

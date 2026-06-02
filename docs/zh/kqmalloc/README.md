@@ -11,12 +11,13 @@ KQMalloc使用透明大页等技术，可最大限度地减少页表缓冲未命
 ## 特性介绍
 
 **表1** KQMalloc特性介绍
+
 |  特性名称 | 特性介绍  |
 | ------------ | ------------ |
 |  多级无锁缓存快速路径| 每个线程拥有独立的本地缓存，小对象分配仅需10条以内指令，全程无需加锁。未命中时逐级回退到Quick Cache（CAS原子操作的无锁缓存）和Fast Cache（自适应容量的共享缓存）分配。 |
 |  大页（THP）惰性释放与原地扩缩| 释放内存时使用 MADV_FREE 惰性回收，标记页面可回收但不立即归还，减少系统调用。大对象realloc通过虚拟内存提交/取消提交（commit/decommit）原地调整大小，避免分配新内存再拷贝。 |
 |  精细的大小分级与低碎片堆选择| 将对象按大小划分为100+级别，小对象以4字节为步进、大对象以缓存行为步进，每次分配匹配最接近的槽位。 |
-|  双向堆脏页回收| 尾部裁剪（tail clean）：当堆驻留超过阈值，通过MADV_DONTNEED释放尾部多余页面。</br>堆压缩（compression）回收尾部虚拟地址空间。</br>中部回收（body clean）：对释放后的中间区域排序合并，向相邻空闲cell扩展以凑齐页面对齐边界后统一释放。 |
+|  双向堆脏页回收| 尾部裁剪（tail clean）：当堆驻留超过阈值，通过MADV_DONTNEED释放尾部多余页面。<br>堆压缩（compression）回收尾部虚拟地址空间。<br>中部回收（body clean）：对释放后的中间区域排序合并，向相邻空闲cell扩展以凑齐页面对齐边界后统一释放。 |
 
 ## 版本说明
 
@@ -40,10 +41,13 @@ KQMalloc内存分配器的快速入门，包括环境变量和加速示例等，
 | [API参考](./api_reference.md) | 提供malloc、calloc、realloc、free等函数的详细说明和使用示例。 |
 
 ## 贡献声明
-欢迎大家为社区做贡献，如果使用过程中有任何问题/建议，或者需要反馈特性需求和bug报告，可以提交[issues](https://gitcode.com/boostkit/kqmalloc/issues/create/choose)联系我们，具体贡献方法可参考[这里](https://gitcode.com/boostkit/community/blob/master/docs/contributor/contributing.md)。
+
+欢迎大家为社区做贡献，如果使用过程中有任何问题/建议，或者需要反馈特性需求和bug报告，可以提交[issues](https://gitcode.com/boostkit/boostcore/issues/create/choose)联系我们，具体贡献方法可参考[这里](https://gitcode.com/boostkit/community/blob/master/docs/contributor/contributing.md)。
 
 ## 免责声明
+
 此代码仓计划参与KQMalloc软件开源，仅作为KQMalloc功能扩展或性能提升，编码风格遵照原生开源软件，继承原生开源软件安全设计，不破坏原生开源软件设计及编码风格和方式，软件的任何漏洞与安全问题，均由相应的上游社区根据其漏洞和安全响应机制解决。请密切关注上游社区发布的通知和版本更新。鲲鹏计算社区对软件的漏洞及安全问题不承担任何责任。
 
 ## License
+
 本项目的文档适用CC-BY 4.0许可证，具体请参见[LICENSE](LICENSE)文件。
