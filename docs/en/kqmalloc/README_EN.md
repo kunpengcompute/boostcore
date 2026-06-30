@@ -17,7 +17,7 @@ Application scenarios: memory allocation and deallocation
 |  Multi-level lock-free cache fast path| Each thread has its own independent local cache. Small object allocation requires no more than 10 instructions and involves no locking throughout the process. When a miss occurs, it falls back to allocating from the Quick Cache (a lock-free cache using atomic CAS operations) and the Fast Cache (an adaptive-capacity shared cache).|
 |  Lazy release and in-place resize of Transparent Huge Pages (THP)| When releasing memory, use MADV_FREE for lazy reclamation, marking pages as reclaimable but not immediately returning them, which reduces system calls. For large objects, realloc adjusts the size in place through virtual memory commit/decommit, avoiding the need to allocate new memory and copy data.|
 |  Fine-grained size classes and low-fragmentation heap selection| Objects are divided into more than 100 size classes. Small objects are classified with a 4-byte step, and large objects are classified with a cache line step. During each allocation, the closest matching slot is selected.|
-|  Bidirectional heap dirty page reclaiming| **Tail Clean**: When the resident memory of the heap exceeds a threshold, release excess tail pages using **MADV_DONTNEED**.<br>**Heap Compression**: Reclaim the tail virtual address space.<br>**Body Clean**: Sort and merge the freed middle regions to extend them towards adjacent free cells, aligning them to page boundaries. These aligned regions can then be uniformly released, reducing memory fragmentation.|
+|  Bidirectional heap dirty page reclaiming| **Tail Clean**: When the resident memory of the heap exceeds a threshold, release excess tail pages using **MADV_DONTNEED**. <br>**Heap Compression**: Reclaim the tail virtual address space. <br>**Body Clean**: Sort and merge the freed middle regions to extend them towards adjacent free cells, aligning them to page boundaries. These aligned regions can then be uniformly released, reducing memory fragmentation.|
 
 ## Release Notes
 
@@ -42,7 +42,7 @@ The quick start guide of KQMalloc provides instructions for environment variable
 
 ## Contribution Statement
 
-We welcome your contributions to the community. If you have any questions/suggestions or want to provide feedback on feature requirements and bug reports, you can submit [issues](https://gitcode.com/boostkit/boostcore/issues/create/choose). For details, see the [contribution guideline](https://gitcode.com/boostkit/community/blob/master/docs/contributor/contributing.md).
+We welcome your contributions to the community. If you have any questions/suggestions or want to provide feedback on feature requirements and bug reports, you can submit issues. For details, see the contribution guideline.
 
 ## Disclaimer
 

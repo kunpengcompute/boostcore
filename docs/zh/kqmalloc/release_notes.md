@@ -1,6 +1,7 @@
-# 版本说明<a name="ZH-CN_TOPIC_0000002518710796"></a>
+# 版本说明书
 
-## V0.20<a name="release-notes-v0-20"></a>
+## V0.20
+
 - 单线程性能大幅提升。
 - 重新设计堆标记缓冲区：原三维数组[NUMA 节点][秩][存储单元]改为一维数组[偏移量 + 存储单元]。
 - 优化最大64MB的大对象高频分配逻辑，适配类MySQL业务负载场景。
@@ -9,7 +10,8 @@
 - KQMALLOC_DIRTY_THRESHOLD含义由脏页数量上限调整为脏页缓存大小上限，单位为兆字节，默认值由256调整为1024，最低生效值为2。
 - 大幅提升GREAT内存分配基准测试跑分性能。
 
-## V0.19<a name="release-notes-v0-19"></a>
+## V0.19
+
 - 大幅提升并行处理能力，可管理数千线程和TB级内存。
 - 启用鲲鹏HIP10A处理器支持。
 - 基于pthread_atfork()框架实现了fork()支持。
@@ -32,7 +34,8 @@
 - 改进malloc基准测试。
 - 移除KQMALLOC_HUGE_THRESHOLD、KQMALLOC_USE_HBM环境变量。
 
-## V0.18<a name="release-notes-v0-18"></a>
+## V0.18
+
 - 启用鲲鹏HIP12处理器支持，优化HIP11处理器支持。
 - 为小栈大小的应用添加精简版分配器。
 - 内存消耗和性能方面的多项优化。
@@ -42,31 +45,37 @@
 - 支持毕昇5编译器。
 - 新增更多诊断功能、基准测试及测试优化。
 
-## V0.17<a name="release-notes-v0-17"></a>
+## V0.17
+
 - 实现KQMALLOC_LOCAL_CACHE_RATIO环境变量。
 - 实现KQMALLOC_TINY_THRESHOLD环境变量。
 - 优化多线程模式下KQMALLOC_ALIGNMENT的默认值（新值为64）。
 - 优化多线程模式下KQMALLOC_HEAP_CACHE_SIZE的默认值（新值为0）。
 - 优化多线程模式下KQMALLOC_HEAP_CACHE_RATIO的默认值（新值为0）。
 
-## V0.16<a name="release-notes-v0-16"></a>
+## V0.16
+
 - 实现KQMALLOC_HUGE_THRESHOLD环境变量。
 
-## V0.15<a name="release-notes-v0-15"></a>
+## V0.15
+
 - 实现基于处理器插槽（package）级粒度的拓扑感知能力。
 - KQMALLOC_NUMA_AWARE的默认值设为2（基于处理器插槽级粒度的NUMA感知）。
 
-## V0.14<a name="release-notes-v0-14"></a>
+## V0.14
+
 - 为鲲鹏HIP11和HIP12启用64字节缓存行大小。
 - 实现nontemporal_malloc()、nontemporal_free()调用，用于分配长生命周期对象。
 - 内部分配器结构的小幅优化。
 - 引入USE_ALLOCATOR_BY_VALUE宏，用于控制TLS行为，以适配Great Fiber库集成。
 
-## V0.13<a name="release-notes-v0-13"></a>
+## V0.13
+
 - 修复free()函数中在某些情况下导致SIGSEGV的bug。
 - 实现KQMALLOC_NUMA_AWARE环境变量。设置KQMALLOC_NUMA_AWARE=0可禁用库的NUMA感知能力。
 
-## V0.12<a name="release-notes-v0-12"></a>
+## V0.12
+
 - 优化KQMALLOC_ALIGNMENT环境变量：新默认值为KQMALLOC_ALIGNMENT=4（不符合C11标准）。
 - 实现KQMALLOC_C11_COMPLIANT_PROCESSES环境变量，以适配KQMALLOC_ALIGNMENT的新默认值。
   该变量是冒号分隔（":"）的进程名列表，列表内进程需要符合C11标准的对齐方式。
@@ -78,7 +87,8 @@
 - （实验性）为HIP11启用HBM。实现实验性环境变量KQMALLOC_USE_HBM=1（README.md中未文档化，未来可能变更）。
   该变量允许在16-31号NUMA节点分配内存。目标系统必须安装libnuma.so库以支持动态加载。
 
-## V0.11<a name="release-notes-v0-11"></a>
+## V0.11
+
 - 分配器现在100%支持NUMA感知。此前版本仅对大于128KB的对象实现NUMA支持。
 - 实现KQMALLOC_USE_THP环境变量，用于禁用/启用透明大页（THP）。默认值为KQMALLOC_USE_THP=1。
 - 修复整数溢出bug（使用malloc、calloc、realloc分配"-1"字节）。
@@ -87,13 +97,15 @@
 - 改进压力测试，覆盖更多对齐方式和分配大小。
 - 新增对gcc 14版本的支持。
 
-## V0.10<a name="release-notes-v0-10"></a>
+## V0.10
+
 - 并行分配器针对"生产者-消费者"模式优化，重新设计缓存机制。
 - 修复HIP09处理器下`make bin`构建选项的问题。
 - 修复HIP11处理器支持：移除自定义memcpy & memset函数，修正断言逻辑。
 - CI流程完全迁入代码仓库，包含毕昇4和CentOS 7配置。
 
-## V0.9<a name="release-notes-v0-9"></a>
+## V0.9
+
 - 引入环境变量KQMALLOC_ALIGNMENT，默认值为16。支持4、8、16、32、64、128字节的对齐粒度。
 - 修复巨型对象重分配的bug。
 - 针对FloorPlan OMP基准测试进行精细调优，现在性能优于jemalloc。
@@ -106,7 +118,8 @@
 - 实现带缓存优化的环境变量KQMALLOC_HEAP_CACHE_SIZE。
 - 调整基准测试：触达已分配内存、估算常驻内存、添加内存屏障以测量操作延迟（而非吞吐量）。
 
-## V0.8<a name="release-notes-v0-8"></a>
+## V0.8
+
 - NUMA感知（仅针对>128KB的对象）。
 - 引入无标记堆（untagged heaps）算法。
 - 降低内存消耗。
@@ -115,13 +128,16 @@
 - 为SPEC测试新增KQMALLOC_ALIGNMENT=4环境变量（也支持8，默认值为16）。
 - 改进并行测试。
 
-## V0.7<a name="release-notes-v0-7"></a>
+## V0.7
+
 - 并行分配器beta版本发布，附带测试用例。
 
-## V0.6<a name="release-notes-v0-6"></a>
+## V0.6
+
 - 导出函数的代码对齐（提升性能稳定性）。
 
-## V0.5<a name="release-notes-v0-5"></a>
+## V0.5
+
 - 大幅改进测试用例。
 - 整合代码整洁性反馈。
 - 重命名为KQMalloc。
