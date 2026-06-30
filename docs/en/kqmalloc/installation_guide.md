@@ -20,13 +20,7 @@ Download a required openEuler version from [Download Center](https://www.openeul
 
 ## Usage Method
 
-Before using KQMalloc, obtain the KQMalloc binary compressed file from the [official website](https://repo.boostkit.osinfra.cn/boostcore/kqmalloc/release/v0.19-beta0/).
-
-Taking the 0.19 version as an example, you can obtain the KQMalloc dynamic library after decompressing the file.
-
- ```shell
- tar -xzvf kqmalloc-v0.19-beta0.tar.gz
- ```
+Before using KQMalloc, obtain the KQMalloc binary compressed file <code>kqmalloc-xxx.tar.gz</code> (xxx represents th version number, e.g, v0.20.0) from the [official website](https://repo.boostkit.osinfra.cn/boostcore/kqmalloc/release/), you can obtain the KQMalloc dynamic library after decompressing the file.
 
 ### Enabling Transparent Huge Pages
 

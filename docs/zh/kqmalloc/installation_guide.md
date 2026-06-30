@@ -20,13 +20,9 @@ openEuler操作系统[获取链接](https://www.openeuler.openatom.cn/zh/downloa
 
 ## 使用方法
 
-使用KQMalloc之前，请先从[官方网站](https://repo.boostkit.osinfra.cn/boostcore/kqmalloc/release/v0.19-beta0/)获取KQMalloc的二进制压缩文件。
+### 获取软件包
 
-以0.19版本的KQMalloc动态库为例，用户解压缩该文件后即可获取到KQMalloc动态库。
-
- ```shell
- tar -xzvf kqmalloc-v0.19-beta0.tar.gz
- ```
+使用KQMalloc之前，请先从[官方网站](https://repo.boostkit.osinfra.cn/boostcore/kqmalloc/release/)获取KQMalloc的二进制压缩文件`kqmalloc-xxx.tar.gz`（其中xxx表示版本号，例如：v0.20.0），用户解压缩该文件后即可获取到KQMalloc动态库。
 
 ### 启用透明大页
 
@@ -60,7 +56,7 @@ export LD_PRELOAD=/<path to KQMalloc>/build/HIP12/lib/libkqmallocmt.so
 ```
 
 同样，可以在GCC编译选项中添加动态库所在路径，链接需要使用的动态库文件。
-例如，若需要使用适配HIP12的KQMalloc请在编译时添加：**-L/<KQMalloc路径>/build/HIP12/lib/ -lkqmallocmt -Wl,-rpath=/<KQMalloc路径>/build/HIP12/lib/** 。
+例如，若需要使用适配HIP12的KQMalloc请在编译时添加：**-L/<KQMalloc路径>/build/HIP12/lib/ -lkqmallocmt -Wl,-rpath=/<KQMalloc路径>/build/HIP12/lib/**。
 
 ### 验证KQMalloc
 
