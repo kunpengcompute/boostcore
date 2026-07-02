@@ -1,5 +1,14 @@
 # Release Notes
 
+## V0.20
+
+- Significantly improved single-threaded library performance.
+- Redesigned the heap token buffer: Changed the original 3D array [NUMA node][rank][storage unit] to a 1D array [offset + storage unit].
+- Optimized the high-frequency allocation logic for large objects up to 64 MB, adapting to MySQL-like workloads.
+- Significantly reduced memory footprint in producer-consumer benchmarks without compromising performance.
+- Added new environment variables: `KQMALLOC_TINY_HEAP_CACHE_SIZE`, `KQMALLOC_SMALL_HEAP_CACHE_SIZE`, `KQMALLOC_MIDDLE_HEAP_CACHE_SIZE`, and `KQMALLOC_QUICK_CACHE_THRESHOLD`.
+- Significantly improved the benchmark score using the GREAT memory allocation benchmark.
+
 ## V0.19
 
 - Significantly improved parallel processing capabilities, capable of managing thousands of threads and TB-level memory.
@@ -17,9 +26,7 @@
 - Improved the embedded memory profiler.
 - Improved the debug version of the library (added duplicate **free()** checks and memory protection mechanisms).
 - Reduced the thread-local storage (TLS) memory consumption of the slim allocator.
-- Added seven new binary versions of the library in the release package: **libkqmalloc.so**,
-  **libkqmallocmt.so**, **libkqmallocmt.slim.so**, **libkqmallocmt.debug.so**, **libkqmallocmt.slim.debug.so**,
-  **libkqmallocmt.profiler.so**, and **libkqmallocmt.slim.profiler.so**.
+- Added seven new binary versions of the library in the release package: **libkqmalloc.so**, **libkqmallocmt.so**, **libkqmallocmt.slim.so**, **libkqmallocmt.debug.so**, **libkqmallocmt.slim.debug.so**, **libkqmallocmt.profiler.so**, and **libkqmallocmt.slim.profiler.so**.
 - Improved the **malloc** benchmark tests.
 - Removed the environment variables **KQMALLOC_HUGE_THRESHOLD** and **KQMALLOC_USE_HBM**.
 
@@ -82,7 +89,7 @@
 - Implemented the **KQMALLOC_USE_THP** environment variable to enable or disable transparent huge pages (THP). The default value is **KQMALLOC_USE_THP=1**.
 - Fixed an integer overflow bug (when using **malloc**, **calloc**, or **realloc** to allocate **-1** bytes).
 - Fixed a bug where the allocator was used after thread destruction (in the 638.imagick_s test case).
-- Fixed the dependency of the`make bin` command on CMake, simplifying the build process on CentOS 7.
+- Fixed the dependency of the `make bin` command on CMake, simplifying the build process on CentOS 7.
 - Improved stress testing to cover more alignment methods and allocation sizes.
 - Added support for GCC 14.
 

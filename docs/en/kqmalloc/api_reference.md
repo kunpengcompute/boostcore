@@ -31,66 +31,66 @@ void *malloc(size_t size);
 
 **Example<a name="en-us_topic_0000001201850423_section1292577112312"></a>**
 
-Edit the sample code.
+1. Edit the sample code.
 
-```c
-#include <stdio.h>
-#include <stdlib.h>
-#include <stdint.h>
+   ```c
+   #include <stdio.h>
+   #include <stdlib.h>
+   #include <stdint.h>
+   
+   #define KQMALLOC_TEST_LEN 10
+   
+   void MallocExample()
+   {
+       int8_t *res = (int8_t *)malloc(KQMALLOC_TEST_LEN);
+       if (res == NULL) {
+           printf("res is null\n");
+       } else {
+           printf("malloc pointer address: %lx\n", res);
+           free(res);
+       }
+   }
+   
+   int main(void) {
+       MallocExample();
+       return 0;
+   }
+   ```
+   
+2. Perform the compilation.
+   
+   ```shell
+   gcc -o run_your_application run_your_application.c -L/<path to KQMalloc>/build/HIP09/lib/ -lkqmallocmt -Wl,-rpath=/<path to KQMalloc>/build/HIP09/lib/
+   ```
 
-#define KQMALLOC_TEST_LEN 10
+3. Run your application.
 
-void MallocExample()
-{
-    int8_t *res = (int8_t *)malloc(KQMALLOC_TEST_LEN);
-    if (res == NULL) {
-        printf("res is null\n");
-    } else {
-        printf("malloc pointer address: %lx\n", res);
-        free(res);
-    }
-}
+   ```shell
+   ./run_your_application
+   ```
 
-int main(void) {
-    MallocExample();
-    return 0;
-}
-```
+   Output:
 
-Perform the compilation.
+   ```text
+   malloc pointer address: ffff97ae8174
+   ```
 
-```shell
-gcc -o run_your_application run_your_application.c -L/<path to KQMalloc>/build/HIP09/lib/ -lkqmallocmt -Wl,-rpath=/<path to KQMalloc>/build/HIP09/lib/
-```
+4. Check whether KQMalloc is used.
 
-Run your application.
+   ```shell
+   ldd ./run_your_application
+   ```
 
-```shell
-./run_your_application
-```
+   Output:
 
-Output:
+   ```text
+       linux-vdso.so.1 (0x0000ffff85520000)
+       libkqmallocmt.so => /home/kqmalloc/build/HIP09/lib/libkqmallocmt.so (0x0000ffff6dac0000)
+       libc.so => /usr/lib64/libc.so.6 (0x0000ffff6d910000)
+       /lib/ld-linux-aarch64.so.1 (0x0000ffff854e3000)
+   ```
 
-```text
-malloc pointer address: ffff97ae8174
-```
-
-Check whether kqmalloc is used.
-
-```shell
-ldd ./run_your_application
-```
-
-Output:
-
-```text
-    linux-vdso.so.1 (0x0000ffff85520000)
-    libkqmallocmt.so => /home/kqmalloc/build/HIP09/lib/libkqmallocmt.so (0x0000ffff6dac0000)
-    libc.so => /usr/lib64/libc.so.6 (0x0000ffff6d910000)
-    /lib/ld-linux-aarch64.so.1 (0x0000ffff854e3000)
-```
-
-If the preceding information is displayed, KQMalloc is successfully loaded and enabled.
+   If the preceding information is displayed, KQMalloc is successfully loaded and enabled.
 
 ### calloc
 
@@ -118,47 +118,49 @@ void *calloc(size_t number_of_objects, size_t size_of_object);
 
 **Example<a name="en-us_topic_0000001201850423_section1292577112312"></a>**
 
-```c
-#include <stdio.h>
-#include <stdlib.h>
-#include <stdint.h>
+1. Edit the sample code.
+   
+   ```c
+   #include <stdio.h>
+   #include <stdlib.h>
+   #include <stdint.h>
+   
+   #define KQMALLOC_TEST_LEN 10
+   
+   void CallocExample()
+   {
+       int8_t *res = (int8_t *)calloc(KQMALLOC_TEST_LEN, KQMALLOC_TEST_LEN);
+       if (res == NULL) {
+           printf("res is null\n");
+       } else {
+           printf("calloc pointer address: %lx\n", res);
+           free(res);
+       }
+   }
+   
+   int main(void) {
+       CallocExample();
+       return 0;
+   }
+   ```
 
-#define KQMALLOC_TEST_LEN 10
+2. Perform the compilation.
+   
+   ```shell
+   gcc -o run_your_application run_your_application.c -L/<path to KQMalloc>/build/HIP09/lib/ -lkqmallocmt -Wl,-rpath=/<path to KQMalloc>/build/HIP09/lib/
+   ```
 
-void CallocExample()
-{
-    int8_t *res = (int8_t *)calloc(KQMALLOC_TEST_LEN, KQMALLOC_TEST_LEN);
-    if (res == NULL) {
-        printf("res is null\n");
-    } else {
-        printf("calloc pointer address: %lx\n", res);
-        free(res);
-    }
-}
+3. Run your application.
+   
+   ```shell
+   ./run_your_application
+   ```
+   
+   Output:
 
-int main(void) {
-    CallocExample();
-    return 0;
-}
-```
-
-Perform the compilation.
-
-```shell
-gcc -o run_your_application run_your_application.c -L/<path to KQMalloc>/build/HIP09/lib/ -lkqmallocmt -Wl,-rpath=/<path to KQMalloc>/build/HIP09/lib/
-```
-
-Run your application.
-
-```shell
-./run_your_application
-```
-
-Output:
-
-```text
-calloc pointer address: ffffafe4c690
-```
+   ```text
+   calloc pointer address: ffffafe4c690
+   ```
 
 ### realloc
 
@@ -186,74 +188,76 @@ void *realloc(void *old_pointer, size_t new_size);
 
 **Example<a name="en-us_topic_0000001201850423_section1292577112312"></a>**
 
-```c
-#include <stdio.h>
-#include <stdlib.h>
-#include <stdint.h>
+1. Edit the sample code.
 
-#define KQMALLOC_TEST_LEN 10
+   ```c
+   #include <stdio.h>
+   #include <stdlib.h>
+   #include <stdint.h>
+   
+   #define KQMALLOC_TEST_LEN 10
+   
+   void ReallocExample()
+   {
+       int8_t *old_pointer = (int8_t *)malloc(KQMALLOC_TEST_LEN * sizeof(int8_t));
+       if (old_pointer == NULL) {
+           printf("old_pointer is null\n");
+           return;
+       } else {
+           printf("old_pointer address: %lx\n", old_pointer);
+           for (int8_t i = 0; i < KQMALLOC_TEST_LEN; ++i) {
+               old_pointer[i] = i;
+           }
+           printf("old_pointer test data:");
+           for (int8_t i = 0; i < KQMALLOC_TEST_LEN; ++i) {
+               printf(" %d", old_pointer[i]);
+           }
+           printf("\n");
+       }
+   
+       int8_t *new_pointer = (int8_t *)realloc(old_pointer, 2 * KQMALLOC_TEST_LEN * sizeof(int8_t));
+       if (new_pointer == NULL) {
+           printf("new_pointer is null\n");
+           free(old_pointer);
+           return;
+       } else {
+          printf("new_pointer address: %lx\n", new_pointer);
+           printf("new_pointer test data:");
+           for (int8_t i = 0; i < KQMALLOC_TEST_LEN; ++i) {
+               printf(" %d", new_pointer[i]);
+           }
+           printf("\n");
+       }
+       free(old_pointer);
+       free(new_pointer);
+   }
+   
+   int main(void) {
+       ReallocExample();
+       return 0;
+   }
+   ```
 
-void ReallocExample()
-{
-    int8_t *old_pointer = (int8_t *)malloc(KQMALLOC_TEST_LEN * sizeof(int8_t));
-    if (old_pointer == NULL) {
-        printf("old_pointer is null\n");
-        return;
-    } else {
-        printf("old_pointer address: %lx\n", old_pointer);
-        for (int8_t i = 0; i < KQMALLOC_TEST_LEN; ++i) {
-            old_pointer[i] = i;
-        }
-        printf("old_pointer test data:");
-        for (int8_t i = 0; i < KQMALLOC_TEST_LEN; ++i) {
-            printf(" %d", old_pointer[i]);
-        }
-        printf("\n");
-    }
+2. Perform the compilation.
 
-    int8_t *new_pointer = (int8_t *)realloc(old_pointer, 2 * KQMALLOC_TEST_LEN * sizeof(int8_t));
-    if (new_pointer == NULL) {
-        printf("new_pointer is null\n");
-        free(old_pointer);
-        return;
-    } else {
-        printf("new_pointer address: %lx\n", new_pointer);
-        printf("new_pointer test data:");
-        for (int8_t i = 0; i < KQMALLOC_TEST_LEN; ++i) {
-            printf(" %d", new_pointer[i]);
-        }
-        printf("\n");
-    }
-    free(old_pointer);
-    free(new_pointer);
-}
+   ```shell
+   gcc -o run_your_application run_your_application.c -L/<path to KQMalloc>/build/HIP09/lib/ -lkqmallocmt -Wl,-rpath=/<path to KQMalloc>/build/HIP09/lib/
+   ```
 
-int main(void) {
-    ReallocExample();
-    return 0;
-}
-```
+3. Run your application.
 
-Perform the compilation.
+   ```shell
+   ./run_your_application
+   ```
 
-```shell
-gcc -o run_your_application run_your_application.c -L/<path to KQMalloc>/build/HIP09/lib/ -lkqmallocmt -Wl,-rpath=/<path to KQMalloc>/build/HIP09/lib/
-```
+   Output:
 
-Run your application.
-
-```shell
-./run_your_application
-```
-
-Output:
-
-```text
-old_pointer address: ffff921c8174
-old_pointer test data: 0 1 2 3 4 5 6 7 8 9
-new_pointer address: ffff921c87ec
-new_pointer test data: 0 1 2 3 4 5 6 7 8 9
-```
+   ```text
+   old_pointer address: ffff921c8174
+   old_pointer test data: 0 1 2 3 4 5 6 7 8 9
+   new_pointer address: ffff921c87ec
+   new_pointer test data: 0 1 2 3 4 5 6 7 8 9
+   ```
 
 ### free
 
@@ -277,5 +281,6 @@ void free(void *p);
 
 See the example of the malloc function.
 
->![](public_sys-resources/icon-note.gif) **NOTE:**
+>![](public_sys-resources/icon-note.gif) **NOTE**
+>
 >The version number and compile time are subject to the running results in your environment. The preceding results are for reference only.

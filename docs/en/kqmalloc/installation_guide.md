@@ -1,102 +1,72 @@
 # Installation Guide
 
-KQMalloc of the new version is open-sourced. You can view the release version in the [source code repository](https://repo.boostkit.osinfra.cn/boostcore/kqmalloc/release/v0.19-beta0/).
-
 ## Verified Environments
 
 To use KQMalloc smoothly and securely, ensure that your environment is one of the verified environments.
 
-| OS                   | CPU  | Compiler                       |
-|-------------------------|---------|----------------------------|
-| openEuler 20.03 LTS SP1 | Kunpeng processor  | GCC 7.3.0 / BiSheng 4.2.0  |
-| openEuler 22.03 LTS SP3 | Kunpeng processor  | GCC 10.3.1 / BiSheng 4.2.0 |
-| openEuler 24.03 LTS SP3 | Kunpeng 950 processor  | GCC 12.3.1 / clang 14.0.6  |
+| OS | CPU | Compiler |
+| ------------------------- | --------- | ---------------------------- |
+| openEuler 20.03 LTS SP1 | Kunpeng 920 series | GCC 7.3.0 / BiSheng 4.2.0 |
+| openEuler 22.03 LTS SP3 | Kunpeng 920 series | GCC 10.3.1 / BiSheng 4.2.0 |
+| openEuler 24.03 LTS SP3 | Kunpeng 950 | GCC 12.3.1 / Clang 14.0.6 |
 
 Download a required openEuler version from [Download Center](https://www.openeuler.openatom.cn/en/download/?archive=true).
 
->![](public_sys-resources/icon-notice.gif) **NOTICE:**
+>![](public_sys-resources/icon-notice.gif) **NOTICE**
 >
 >- KQMalloc supports only Kunpeng processors and will exit abnormally for any other processors. If a program dynamically loads KQMalloc, the program exits when KQMalloc is linked and an undefined result will be generated.
 >- KQMalloc does not support GCC 7.3.0 or earlier.
 >- KQMalloc is a primitive library whose computing process involves memory read, write, and allocation. KQMalloc does not provide or release an OS, or take responsibility for the OS security. You need to install an OS by yourself and perform security hardening, such as installing only necessary applications or uninstalling unnecessary applications that have been installed.
 
-## Obtaining the Software Package
+## Usage Method
 
-Before installing KQMalloc, obtain the software package from the official website and verify the software package to ensure that it is consistent with the original software package on the website.
+Before using KQMalloc, obtain the KQMalloc binary compressed file <code>kqmalloc-xxx.tar.gz</code> (xxx represents th version number, e.g, v0.20.0) from the [official website](https://repo.boostkit.osinfra.cn/boostcore/kqmalloc/release/), you can obtain the KQMalloc dynamic library after decompressing the file.
 
-Obtain the KQMalloc software installation package [KQMalloc-xxxx.zip](https://repo.boostkit.osinfra.cn/boostcore/kqmalloc/release/v0.19-beta0/) from GitCode. Decompress the ZIP file to obtain the RPM installation package.
+### Enabling Transparent Huge Pages
 
-   **_xxxx_** indicates the version number.
+Before running the application, it is recommended to confirm the system page size and enable the Transparent Huge Pages (THP) feature.
 
-## Installing KQMalloc
+```shell
+getconf PAGESIZE
+echo always > /sys/kernel/mm/transparent_hugepage/enabled
+echo madvise > /sys/kernel/mm/transparent_hugepage/defrag
+```
 
-This section describes how to install KQMalloc using an RPM package and verify KQMalloc after the installation.
+If THP have been successfully enabled on the system, the following status will be displayed:
 
-**Installation Procedure<a name="section39201312169"></a>**
+```text
+[root@localhost ~]# cat /sys/kernel/mm/transparent_hugepage/enabled
+[always] madvise never
+[root@localhost ~]# cat /sys/kernel/mm/transparent_hugepage/defrag
+always defer defer+madvise [madvise] never
+```
 
-1. To prevent buffer overflow attacks, enable address space layout randomization (ASLR) before installing KQMalloc.
+### Using KQMalloc
 
-    >![](public_sys-resources/icon-note.gif) **NOTE:**
-    >ASLR randomizes the layout of linear areas such as the heap, stack, and shared library mapping to make it more difficult for attackers to predict target addresses and locate code. This technology can be applied to heaps, stacks, and memory mapping areas (mmap base addresses, shared libraries, and vDSO pages).
+KQMalloc takes effect simply by using the preloading method, which optimizes memory-related functions in the standard library.
+Please select the files under the corresponding directory based on the Kunpeng processor model you use.
+Among them, `libkqmalloc.so` is the single-threaded version of the library; `libkqmallocmt.so` is the multi-threaded version of the library; `libkqmallocmt.debug.so` is the debugging version with assertions, `double free()` checks, and other features enabled; `libkqmallocmt.profiler.so` is the profiling version with memory profiling features enabled, and the profiling files will be saved in the `/tmp/kqmalloc_<process_name>CPU<cpu_id>.txt` file.
 
-    ```shell
-    echo 2 >/proc/sys/kernel/randomize_va_space
-    ```
+Taking the multi-threaded scenario as an example:
 
-2. Obtain the KQMalloc software package and decompress it to obtain the binary RPM package.
-3. Install KQMalloc as the **root** user.
+```shell
+export LD_PRELOAD=/<path to KQMalloc>/build/HIP12/lib/libkqmallocmt.so
+```
 
-    ```shell
-    rpm -ivh KQMalloc-xxxx.rpm
-    ```
+Similarly, you can add the path where the dynamic library is located to the GCC compilation options to link the dynamic library file that needs to be used.
 
-    After the installation, the system automatically adds the path to the **lib** folder, that is, **/usr/local/kqmalloc/lib**, to the environment variable **LD\_LIBRARY\_PATH**.
+### Verifying KQMalloc
 
-**Verification<a name="section193111321616"></a>**
+After setting the `LD_PRELOAD` environment variable or the `rpath` compilation path, you can use the `ldd` command to check whether the KQMalloc library is successfully linked. The normal linking result is as follows:
 
-1. Run the **source** command or log in to the terminal again for the environment variable to take effect.
-
-    ```shell
-    source /etc/profile
-    ```
-
-2. Check whether the environment variable **LD\_LIBRARY\_PATH** contains the installation path **/usr/local/kqmalloc/lib**.
-
-    ```shell
-    env | grep LD_LIBRARY_PATH
-    ```
-
-    If the command output contains the installation path, the installation is successful.
-
-    ```text
-    LD_LIBRARY_PATH=/usr/local/kqmalloc/lib:
-    ```
-
-    After the installation, the corresponding files are generated in the installation path (the default path is **/usr/local/kqmalloc**). The **include** folder contains the header files of the sub-libraries, the **lib** folder contains the dynamic library files of the system library.
-
-3. Add the path of the dynamic library to the GCC compilation option to link the required dynamic library file. After compilation, run the **ldd** command to check that the dependency library of the program is correctly linked.
-4. To use KQMalloc, add **-L/<path to KQMalloc>/build/HIP09/lib/ -lkqmallocmt -Wl,-rpath=/<path to KQMalloc>/build/HIP09/lib/** during compilation.
-  
-## Uninstalling KQMalloc
-
-If you do not require KQMalloc, uninstall it. During uninstallation, service flows that are being executed are affected. You are advised to stop the service flows before uninstalling KQMalloc.
-
-1. Run the **rpm -e** command to uninstall the RPM package.
-
-    ```shell
-    rpm -e kqmalloc
-    ```
-
-2. Verify that the **/usr/local/kqmalloc** directory is deleted.
-
-    ```shell
-    ll /usr/local/kqmalloc
-    ```
-
-    If the command output indicates that the directory cannot be found, the installation directory is deleted successfully.
-
-3. Confirm that the **/usr/local/kqmalloc** environment variables are deleted from the **/etc/profile** file.
-
-    ```shell
-    cat /etc/profile
-    ```
+```text
+[root@localhost mmpm]# ldd test
+        linux-vdso.so.1 (0x0000ffff9ee6a000)
+        /home/kqmalloc/build/HIP12/lib/libkqmallocmt.so (0x0000ffff9b400000)
+        libmmpm.so => not found
+        libstdc++.so.6 => /usr/lib64/libstdc++.so.6 (0x0000ffff9b200000)
+        libm.so.6 => /usr/lib64/libm.so.6 (0x0000ffff9b150000)
+        libgcc_s.so.1 => /usr/lib64/libgcc_s.so.1 (0x0000ffff9b110000)
+        libc.so.6 => /usr/lib64/libc.so.6 (0x0000ffff9af60000)
+        /lib/ld-linux-aarch64.so.1 (0x0000ffff9ee2d000)
+```

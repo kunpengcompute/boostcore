@@ -16,17 +16,13 @@ openEuler操作系统[获取链接](https://www.openeuler.openatom.cn/zh/downloa
 >
 >- KQMalloc目前只支持鲲鹏处理器，其他处理器使用KQMalloc时会异常退出。如果以动态的方式加载KQMalloc库，程序会在链接KQMalloc时退出，造成未定义的结果。
 >- KQMalloc版本不支持GCC 7.3.0以下版本。
->- KQMalloc为底层原语库，计算流程涉及内存读写、分配等操作。KQMalloc不提供和发布操作系统，操作系统须用户自行安装，KQMalloc不承担操作系统的安全责任，用户需要结合自身应用对操作系统安全加固，包括不安装或者剔除不必要的应用等。
+>- KQMalloc为底层原语库，计算流程涉及内存读写、分配等操作。KQMalloc不提供和也不发布操作系统，操作系统须用户自行安装，KQMalloc不承担操作系统的安全责任，用户需要结合自身应用对操作系统安全加固，包括不安装或者剔除不必要的应用等。
 
 ## 使用方法
 
-使用KQMalloc之前，请先从[官方网站](https://repo.boostkit.osinfra.cn/boostcore/kqmalloc/release/v0.19-beta0/)获取KQMalloc的二进制压缩文件。
+### 获取软件包
 
-以0.19版本的KQMalloc动态库为例，用户解压缩该文件后即可获取到KQMalloc动态库。
-
- ```shell
- tar -xzvf kqmalloc-v0.19-beta0.tar.gz
- ```
+使用KQMalloc之前，请先从[官方网站](https://repo.boostkit.osinfra.cn/boostcore/kqmalloc/release/)获取KQMalloc的二进制压缩文件`kqmalloc-xxx.tar.gz`（其中xxx表示版本号，例如：v0.20.0），用户解压缩该文件后即可获取到KQMalloc动态库。
 
 ### 启用透明大页
 
@@ -51,7 +47,7 @@ always defer defer+madvise [madvise] never
 
 KQMalloc通过优化标准库中的内存相关函数，只需使用预加载方式即可生效。
 请根据所使用的鲲鹏处理器型号（HIP08, HIP09, HIP10A, HIP11, HIP12）选择对应的目录下的文件。
-其中libkqmalloc.so是该库的单线程版本；libkqmallocmt.so是该库的多线程版本；libkqmallocmt.debug.so是启用了断言、double free()检查等功能的调试版本；libkqmallocmt.profiler.so是启用了内存分析功能的分析版本，分析文件会保存在/tmp/kqmalloc_<进程名>CPU<cpu_id>.txt文件中。
+其中libkqmalloc.so是该库的单线程版本；libkqmallocmt.so是该库的多线程版本；libkqmallocmt.debug.so是启用了断言、double free()检查等功能的调试版本；libkqmallocmt.profiler.so是启用了内存分析功能的分析版本，分析文件会保存在/tmp/kqmalloc_<进程名>CPU *<cpu_id>*.txt文件中。
 
 以鲲鹏HIP12的多线程场景为例：
 
@@ -60,7 +56,7 @@ export LD_PRELOAD=/<path to KQMalloc>/build/HIP12/lib/libkqmallocmt.so
 ```
 
 同样，可以在GCC编译选项中添加动态库所在路径，链接需要使用的动态库文件。
-例如，若需要使用适配HIP12的KQMalloc请在编译时添加：**-L/<KQMalloc路径>/build/HIP12/lib/ -lkqmallocmt -Wl,-rpath=/<KQMalloc路径>/build/HIP12/lib/**
+例如，若需要使用适配HIP12的KQMalloc请在编译时添加：**-L/<KQMalloc路径>/build/HIP12/lib/ -lkqmallocmt -Wl,-rpath=/<KQMalloc路径>/build/HIP12/lib/**。
 
 ### 验证KQMalloc
 
