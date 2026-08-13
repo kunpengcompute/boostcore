@@ -2,7 +2,7 @@
 
 ## 函数说明
 
-KQMalloc是专为鲲鹏处理器设计的内存分配器，适配Linux操作系统4KB和64KB系统页、48位内存虚拟地址的系统场景。KQMalloc使用透明大页等技术减少页表缓冲未命中、缓存碎片和缓存别名。本页介绍malloc、calloc、realloc和free函数。
+KQMalloc是专为鲲鹏处理器设计的内存分配器，适配Linux操作系统4KB和64KB系统页、48位内存虚拟地址的系统场景。KQMalloc使用透明大页等技术减少页表缓冲未命中、缓存碎片和缓存别名。本文档详细介绍malloc、calloc、realloc和free函数。
 
 以下示例以HIP09处理器目录中的V0.22预编译`libkqmalloc.ptag.so`为例。请将`/path/to/kqmalloc-vX.Y.Z`替换为实际解压目录。
 
@@ -22,7 +22,7 @@ void *malloc(size_t size);
 
 **参数说明**
 
-| 参数名 | 描述 | 取值范围 | 输入/输出 |
+| 参数名 | 参数说明 | 取值范围 | 输入/输出 |
 | ------ | ---- | -------- | --------- |
 | size | 申请内存的字节数。 | 非负数 | 输入 |
 
@@ -59,6 +59,8 @@ int main(void)
 }
 ```
 
+按照以下步骤编译并运行malloc函数示例。
+
 1. 编译。
 
     ```shell
@@ -75,7 +77,7 @@ int main(void)
     ./run_your_application
     ```
 
-    运行结果：
+    运行结果如下。
 
     ```text
     malloc pointer address: 0xffff97ae8174
@@ -87,7 +89,7 @@ int main(void)
     ldd ./run_your_application
     ```
 
-    验证结果应包含KQMalloc动态库，例如：
+    验证结果应包含KQMalloc动态库，示例如下。
 
     ```text
     libkqmalloc.ptag.so => /path/to/kqmalloc-vX.Y.Z/HIP09/lib/libkqmalloc.ptag.so (0x0000ffff6dac0000)
@@ -107,7 +109,7 @@ void *calloc(size_t number_of_objects, size_t size_of_object);
 
 **参数说明**
 
-| 参数名 | 描述 | 取值范围 | 输入/输出 |
+| 参数名 | 参数说明 | 取值范围 | 输入/输出 |
 | ------ | ---- | -------- | --------- |
 | number_of_objects | 申请内存块的数量。 | 非负数 | 输入 |
 | size_of_object | 单个内存块的字节数。 | 非负数 | 输入 |
@@ -145,6 +147,8 @@ int main(void)
 }
 ```
 
+按照以下步骤编译并运行calloc函数示例。
+
 1. 编译。
 
     ```shell
@@ -161,7 +165,7 @@ int main(void)
     ./run_your_application
     ```
 
-    运行结果：
+    运行结果如下。
 
     ```text
     calloc pointer address: 0xffffafe4c690
@@ -181,7 +185,7 @@ void *realloc(void *old_pointer, size_t new_size);
 
 **参数说明**
 
-| 参数名 | 描述 | 取值范围 | 输入/输出 |
+| 参数名 | 参数说明 | 取值范围 | 输入/输出 |
 | ------ | ---- | -------- | --------- |
 | old_pointer | 指向需重新分配的旧内存；为NULL时等价于调用malloc(new_size)。 | NULL或有效指针 | 输入 |
 | new_size | 重新申请内存的字节数。 | 非负数 | 输入 |
@@ -237,6 +241,8 @@ int main(void)
 }
 ```
 
+按照以下步骤编译并运行realloc函数示例。
+
 1. 编译。
 
     ```shell
@@ -253,7 +259,7 @@ int main(void)
     ./run_your_application
     ```
 
-    运行结果：
+    运行结果如下。
 
     ```text
     old_pointer address: 0xffff921c8174
@@ -275,7 +281,7 @@ void free(void *p);
 
 **参数说明**
 
-| 参数名 | 描述 | 取值范围 | 输入/输出 |
+| 参数名 | 参数说明 | 取值范围 | 输入/输出 |
 | ------ | ---- | -------- | --------- |
 | p | 指向需释放内存的指针；为NULL时不执行任何操作。 | NULL或有效指针 | 输入 |
 
@@ -285,3 +291,9 @@ void free(void *p);
 
 >![](public_sys-resources/icon-note.gif) **说明：**
 >示例中的指针地址以实际运行结果为准。
+
+## 修订记录
+
+|发布日期|修订记录|
+|--|--|
+|2026-09-30|第三次正式发布。<br><ul><li>[优化文档结构，统一函数说明、参数、返回值和示例格式。](#函数定义)</li><li>[更新V0.22预编译`libkqmalloc.ptag.so`的编译链接及加载验证示例。](#malloc)</li><li>完善[realloc()](#realloc)和[free()](#free)的参数边界及内存释放说明，修正指针打印和示例代码。</li></ul>|

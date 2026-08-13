@@ -4,7 +4,7 @@
 
 ## 安装部署
 
-获取和解压动态库的详细步骤请参见[安装指南](./installation_guide.md)。KQMalloc V0.22提供以下动态库：
+获取和解压动态库的详细步骤请参见[安装指南](./installation_guide.md)。KQMalloc V0.22提供以下动态库。
 
 | 库文件 | 说明 |
 | ------- | ---- |
@@ -17,7 +17,7 @@
 
 所有动态库均为并行分配器。分配器启动时按单线程模式初始化，检测到第二个线程后自动切换为多线程模式；该模式不可通过环境变量显式指定。未启用指针标记特性的版本适用于内核不支持指针标记的系统，或自身使用指针标记的应用（如Go、Java）。
 
-以HIP09处理器上启用指针标记特性的发布版本为例：
+以下命令以HIP09处理器上启用指针标记特性的发布版本为例。
 
 ```shell
 kqmalloc_root=/path/to/kqmalloc-vX.Y.Z
@@ -26,9 +26,9 @@ LD_PRELOAD="$kqmalloc_root/HIP09/lib/libkqmalloc.ptag.so" ./run_your_application
 
 ## 环境变量
 
-下表介绍KQMalloc支持的环境变量。表中按单线程模式和多线程模式区分的默认值由分配器根据运行状态自动选择。
+如[**表1** KQMalloc库环境变量说明](#KQMalloc库环境变量说明)所示，KQMalloc支持以下环境变量。表中按单线程模式和多线程模式区分的默认值由分配器根据运行状态自动选择。
 
-**表 1** KQMalloc环境变量说明<a id="KQMalloc库环境变量说明"></a>
+**表1** KQMalloc库环境变量说明<a id="KQMalloc库环境变量说明"></a>
 
 | 变量名称 | 说明 | 默认值 | 可选值 |
 |---------|------|-------|-------|
@@ -58,7 +58,7 @@ LD_PRELOAD="$kqmalloc_root/HIP09/lib/libkqmalloc.ptag.so" ./run_your_application
 
 ### 环境变量配置示例
 
-环境变量可以仅对当前应用生效。以下示例将对象地址对齐大小设置为16字节：
+环境变量可以仅对当前应用生效。以下示例将对象地址对齐大小设置为16字节。
 
 ```shell
 kqmalloc_root=/path/to/kqmalloc-vX.Y.Z
@@ -76,13 +76,13 @@ LD_PRELOAD="$kqmalloc_root/HIP09/lib/libkqmalloc.ptag.so" \
 ### 测试步骤
 
 1. 确保两次测试使用相同的硬件、操作系统、输入数据、线程绑定方式、系统负载和应用配置。
-2. 使用系统默认内存库运行应用，并记录耗时和最大常驻内存：
+2. 使用系统默认内存库运行应用，并记录耗时和最大常驻内存。
 
     ```shell
     /usr/bin/time -v -o system-default.time ./run_your_application
     ```
 
-3. 在相同条件下预加载KQMalloc并再次运行：
+3. 在相同条件下预加载KQMalloc并再次运行。
 
     ```shell
     kqmalloc_root=/path/to/kqmalloc-vX.Y.Z
@@ -93,10 +93,16 @@ LD_PRELOAD="$kqmalloc_root/HIP09/lib/libkqmalloc.ptag.so" \
 
 4. 比较两次输出中的`Elapsed (wall clock) time`和`Maximum resident set size`。建议多次运行并取中位数，以降低系统抖动的影响。
 
-运行时间提升比例可按以下公式计算：
+运行时间提升比例可按以下公式计算。
 
 ```text
 (系统默认内存库运行时间 - KQMalloc运行时间) / 系统默认内存库运行时间 × 100%
 ```
 
 实际结果受处理器、操作系统、业务负载、线程绑定方式和环境变量配置等因素影响，请以客户环境实测数据为准。
+
+## 修订记录
+
+|发布日期|修订记录|
+|--|--|
+|2026-09-30|第三次正式发布。<br><ul><li>优化文档结构，按[安装部署](#安装部署)、[环境变量](#环境变量)和[验证加速效果](#验证加速效果)组织文档内容。</li><li>[更新V0.22六种动态库的用途、选择原则及预加载方法。](#安装部署)</li><li>[新增V0.21、V0.22环境变量说明，并更新变量默认值、取值范围和配置示例。](#环境变量)</li><li>[将旧版本固定性能数据更新为客户业务程序的A/B性能验证方法。](#验证加速效果)</li></ul>|
