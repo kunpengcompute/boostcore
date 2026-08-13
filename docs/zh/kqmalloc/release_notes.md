@@ -1,5 +1,22 @@
 # 版本说明书
 
+## V0.22
+
+- 大幅提升aligned_alloc()、memalign()、posix_memalign()、valloc()和pvalloc()系列函数的性能。
+- 新增KQMALLOC_ALIGNED_LOCAL_THRESHOLD、KQMALLOC_LOCAL_CACHE_LOW和KQMALLOC_ALIGNED_LOCAL_CACHE_LOW环境变量。
+
+## V0.21
+
+- 不再提供独立的单线程动态库。
+- 实现指针标记（pointer tag）特性。
+- 调整二进制库命名：libkqmalloc.so现为并行版KQMalloc；libkqmalloc.ptag.so为启用指针标记特性的并行版KQMalloc。
+- 新增KQMALLOC_EXCLUDE、KQMALLOC_LOCAL_CACHE_MIN、KQMALLOC_LOCAL_CACHE_MAX和KQMALLOC_LOCAL_THRESHOLD环境变量。
+- KQMALLOC_LOCAL_CACHE_RATIO不仅可用于减小本地缓存，也可用于增大本地缓存。
+- 移除KQMALLOC_SINGLE_THREADED环境变量。
+- 实现free_sized()、free_aligned_sized()、valloc()和pvalloc()标准函数。
+- 支持512MB透明大页。
+- KQMALLOC_NUMA_AWARE新增轮询（round-robin）模式。
+
 ## V0.20
 
 - 单线程性能大幅提升。
@@ -19,6 +36,7 @@
 - 重新设计aligned_alloc()实现，现在支持最高128MB的对齐粒度。
 - 实现KQMALLOC_DIRTY_THRESHOLD、KQMALLOC_PROFILER_SECONDS、KQMALLOC_PROFILER_EXPONENT环境变量。
 - 重新设计巨型对象分配实现。
+- 库的处理器二进制版本重命名为HIP08、HIP09、HIP10A、HIP11和HIP12。
 - 库的64K和2MB页大小的二进制版本已合并为单一二进制版本。
 - 移除实验性的HBM支持。
 - 优化多线程模式下KQMALLOC_ALIGNMENT的默认值（新值恢复为16）。
@@ -27,10 +45,9 @@
 - 修复首次调用free()函数（此前未调用malloc()）时可能使用未初始化线程本地分配器的问题。
 - 改进嵌入式内存分析器。
 - 改进库的调试版本（新增重复free()检查和内存保护机制）。
-- 降低精简版分配器的线程本地存储（TLS）内存消耗。
-- 发布包中新增库的二进制版本，总计7个：libkqmalloc.so、
-  libkqmallocmt.so、libkqmallocmt.slim.so、libkqmallocmt.debug.so、libkqmallocmt.slim.debug.so、
-  libkqmallocmt.profiler.so、libkqmallocmt.slim.profiler.so。
+- 降低线程本地存储（TLS）内存消耗，因此不再需要精简版分配器。
+- 移除精简版分配器。
+- 发布包中的二进制库总计4个：libkqmalloc.so、libkqmallocmt.so、libkqmallocmt.debug.so和libkqmallocmt.profiler.so。
 - 改进malloc基准测试。
 - 移除KQMALLOC_HUGE_THRESHOLD、KQMALLOC_USE_HBM环境变量。
 
@@ -93,16 +110,13 @@
 - 实现KQMALLOC_USE_THP环境变量，用于禁用/启用透明大页（THP）。默认值为KQMALLOC_USE_THP=1。
 - 修复整数溢出bug（使用malloc、calloc、realloc分配"-1"字节）。
 - 修复线程销毁后使用分配器的bug（638.imagick_s测试用例）。
-- 修复`make bin`命令对cmake的依赖（简化CentOS 7下的构建流程）。
 - 改进压力测试，覆盖更多对齐方式和分配大小。
 - 新增对gcc 14版本的支持。
 
 ## V0.10
 
 - 并行分配器针对"生产者-消费者"模式优化，重新设计缓存机制。
-- 修复HIP09处理器下`make bin`构建选项的问题。
 - 修复HIP11处理器支持：移除自定义memcpy & memset函数，修正断言逻辑。
-- CI流程完全迁入代码仓库，包含毕昇4和CentOS 7配置。
 
 ## V0.9
 
@@ -114,7 +128,6 @@
 - 实现新的巨型对象分配算法：将munmap()大部分替换为madvise(MADV_DONTNEED)。
 - 通过环境变量KQMALLOC_SINGLE_THREADED=1优化单线程模式。
 - 新增鲲鹏HIP11处理器支持。
-- 因gcc在HIP09处理器下使用-O3 & -Ofast编译时出现错误，开始从gcc 10.3.1_2024.08迁移至BiShengCompiler-4.0.0。
 - 实现带缓存优化的环境变量KQMALLOC_HEAP_CACHE_SIZE。
 - 调整基准测试：触达已分配内存、估算常驻内存、添加内存屏障以测量操作延迟（而非吞吐量）。
 
@@ -141,5 +154,4 @@
 - 大幅改进测试用例。
 - 整合代码整洁性反馈。
 - 重命名为KQMalloc。
-- 修复编译警告和代码风格问题。
 - 更好地支持OE平台。
