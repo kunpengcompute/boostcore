@@ -56,7 +56,7 @@ BoostCore基础加速面向主流应用场景，提供OS及系统软件等基础
 |[kpglibc](https://gitcode.com/boostkit/kpglibc) | kpglibc是鲲鹏参与glibc开源社区的仓库，基于华为鲲鹏处理器利用向量化指令集对glibc中的字符串操作函数、内存操作函数和时间操作函数进行性能优化，适用于鲲鹏920新型号处理器、950处理器，推荐使用SVE优化的版本获得更好的性能。函数接口与开源glibc保持一致，接口内部不做完整入参校验，入参合法性及合理性由调用方业务来保证。 |
 | [protobuf](https://gitcode.com/boostkit/protobuf) | 基于上游社区源码进行鲲鹏优化适配的补丁仓。 |
 | [sonic-cpp](https://gitcode.com/boostkit/sonic-cpp) | 基于上游社区源码进行鲲鹏优化适配的补丁仓。 |
-| [KQMalloc](https://gitcode.com/boostkit/boostcore/blob/master/docs/zh/kqmalloc/README.md) （仅提供文档仓，代码仓待开源）| KQMalloc 是专为鲲鹏920系列处理器设计的内存分配器，针对Linux操作系统下4KB和64KB系统页大小、48位内存虚拟地址的系统场景进行了适配与优化。 KQMalloc使用透明大页等技术，可最大限度地减少页表缓冲未命中、降低缓存碎片和缓存别名问题。 该分配器支持单线程和多线程应用场景，可极大地提升应用性能。 |
+| [KQMalloc](./docs/zh/kqmalloc/README.md)（提供预编译动态库及配套文档） | KQMalloc是专为鲲鹏处理器设计的并行内存分配器，适配Linux操作系统下4KB和64KB系统页、48位内存虚拟地址的系统场景。分配器初始化时按单线程模式运行，检测到第二个线程后自动切换到多线程模式。KQMalloc使用透明大页等技术，可减少页表缓冲未命中、缓存碎片和缓存别名问题。 |
 | [AVX2KI](https://gitcode.com/boostkit/avx2ki) | AVX intrinsic向鲲鹏指令集迁移库。 |
 
 <!--
@@ -119,10 +119,10 @@ BoostCore基础加速面向主流应用场景，提供OS及系统软件等基础
 
 ## 贡献、建议与交流
 
-欢迎大家为社区做贡献，如果使用过程中有任何问题/建议，或者需要反馈特性需求和bug报告，可以提交[Issues](zh-cn_topic_0000002535534673.md)联系我们，具体贡献方法可参考[这里](https://gitcode.com/boostkit/community/blob/master/docs/contributor/contributing.md)。同时也欢迎大家在[讨论专区](https://gitcode.com/boostkit/community/discussions)展开讨论交流。感谢您的支持。
+欢迎大家为社区做贡献，如果使用过程中有任何问题/建议，或者需要反馈特性需求和bug报告，可以提交[Issues](https://gitcode.com/boostkit/boostcore/issues/create/choose)联系我们，具体贡献方法可参考[这里](https://gitcode.com/boostkit/community/blob/master/docs/contributor/contributing.md)。同时也欢迎大家在[讨论专区](https://gitcode.com/boostkit/community/discussions)展开讨论交流。感谢您的支持。
 
 ## LICENSE
 
 本项目采用Apache License 2.0许可证。详见[LICENSE](https://gitcode.com/boostkit/cloud-virtual/blob/master/LICENSE)文件。
 
-本项目的文档适用CC-BY 4.0许可证，具体请参见[LICENSE](docs/LICENSE)文件。
+本项目的文档适用CC-BY 4.0许可证，具体请参见[LICENSE](docs/zh/kqmalloc/LICENSE)文件。

@@ -1,30 +1,49 @@
 # 安装指南
 
+本文介绍如何获取、使用和移除KQMalloc V0.22预编译动态库。KQMalloc以压缩包形式交付，解压后可直接使用其中的动态库。
+
 ## 已验证环境
 
 为保证您可以顺利安全地使用KQMalloc，请确保所使用的环境信息在已验证环境范围内。
 
 | 操作系统 | CPU类型 | 编译器 |
 | ------------------------- | --------- | ------------------ |
-| openEuler 20.03 LTS SP1 | 鲲鹏920系列处理器 | GCC 7.3.0 / 毕昇4.2.0 |
-| openEuler 22.03 LTS SP3 | 鲲鹏920系列处理器 | GCC 10.3.1 / 毕昇4.2.0 |
-| openEuler 24.03 LTS SP3 | 鲲鹏950处理器 | GCC 12.3.1 / Clang 14.0.6 |
+| openEuler 20.03 LTS SP1 | 鲲鹏处理器 | GCC 7.3.0 / BiSheng 4.2.0 |
+| openEuler 22.03 LTS SP3 | 鲲鹏处理器 | GCC 10.3.1 / BiSheng 4.2.0 |
+| openEuler 24.03 LTS SP3 | 鲲鹏处理器 | GCC 12.3.1 / clang 14.0.6 |
 
 openEuler操作系统[获取链接](https://www.openeuler.openatom.cn/zh/download/?archive=true)。
 
->![](public_sys-resources/icon-notice.gif) **须知：**
+>![](public_sys-resources/icon-notice.gif) **说明：**
 >
->- KQMalloc目前只支持鲲鹏处理器，其他处理器使用KQMalloc时会异常退出。如果以动态的方式加载KQMalloc库，程序会在链接KQMalloc时退出，造成未定义的结果。
->- KQMalloc版本不支持GCC 7.3.0以下版本。
->- KQMalloc为底层原语库，计算流程涉及内存读写、分配等操作。KQMalloc不提供和也不发布操作系统，操作系统须用户自行安装，KQMalloc不承担操作系统的安全责任，用户需要结合自身应用对操作系统安全加固，包括不安装或者剔除不必要的应用等。
+>- KQMalloc目前只支持鲲鹏处理器，其他处理器使用KQMalloc时会异常退出。如果以动态方式加载KQMalloc库，程序会在链接KQMalloc时退出，造成未定义的结果。
+>- KQMalloc不支持GCC 7.3.0以下版本。
+>- KQMalloc为底层原语库，计算流程涉及内存读写、分配等操作。KQMalloc不提供和发布操作系统，操作系统须用户自行安装。用户需要结合自身应用完成操作系统安全加固，包括不安装或者移除不必要的应用等。
 
-## 使用方法
+## 获取软件包
 
-### 获取软件包
+1. 进入[KQMalloc发布目录](https://repo.boostkit.osinfra.cn/boostcore/kqmalloc/release/)，选择所需版本的子目录。
+2. 下载版本子目录中的`kqmalloc-vX.Y.Z.tar.gz`压缩包，其中`X.Y.Z`表示版本号。如果下载页面提供校验文件，请按页面说明校验软件包完整性。
+3. 解压压缩包。
 
-使用KQMalloc之前，请先从[官方网站](https://repo.boostkit.osinfra.cn/boostcore/kqmalloc/release/)获取KQMalloc的二进制压缩文件`kqmalloc-xxx.tar.gz`（其中xxx表示版本号，例如：v0.20.0），用户解压缩该文件后即可获取到KQMalloc动态库。
+    ```shell
+    tar -xzf kqmalloc-vX.Y.Z.tar.gz
+    ```
 
-### 启用透明大页
+解压目录按HIP08、HIP09、HIP10A、HIP11和HIP12处理器型号组织。每个处理器目录的`lib`子目录包含以下动态库。
+
+| 库文件 | 说明 |
+| ------- | ---- |
+| `libkqmalloc.ptag.so` | 启用指针标记特性的发布版本 |
+| `libkqmalloc.ptag.debug.so` | 启用指针标记、断言和double free()检查等功能的调试版本 |
+| `libkqmalloc.ptag.profiler.so` | 启用指针标记和内存分析功能的分析版本 |
+| `libkqmalloc.so` | 未启用指针标记特性的发布版本 |
+| `libkqmalloc.debug.so` | 未启用指针标记特性，启用断言和double free()检查等功能的调试版本 |
+| `libkqmalloc.profiler.so` | 未启用指针标记特性，启用内存分析功能的分析版本 |
+
+以上动态库均为并行分配器。分配器启动时按单线程模式初始化，检测到第二个线程后自动切换为多线程模式。未启用指针标记特性的版本适用于内核不支持指针标记的系统，或自身使用指针标记的应用（如Go、Java）。内存分析文件保存在`/tmp/kqmalloc_<进程名>_CPU<cpu_id>_<ticks>.txt`。
+
+## 启用透明大页
 
 在运行应用前，建议先确认系统页大小并开启透明大页功能。
 
@@ -34,7 +53,7 @@ echo always > /sys/kernel/mm/transparent_hugepage/enabled
 echo madvise > /sys/kernel/mm/transparent_hugepage/defrag
 ```
 
-若系统已成功开启透明大页，将显示如下所示状态。
+若系统已成功开启透明大页，将显示如下状态。
 
 ```text
 [root@localhost ~]# cat /sys/kernel/mm/transparent_hugepage/enabled
@@ -43,33 +62,59 @@ echo madvise > /sys/kernel/mm/transparent_hugepage/defrag
 always defer defer+madvise [madvise] never
 ```
 
-### 使用KQMalloc
+## 使用KQMalloc
 
-KQMalloc通过优化标准库中的内存相关函数，只需使用预加载方式即可生效。
-请根据所使用的鲲鹏处理器型号（HIP08, HIP09, HIP10A, HIP11, HIP12）选择对应的目录下的文件。
-其中libkqmalloc.so是该库的单线程版本；libkqmallocmt.so是该库的多线程版本；libkqmallocmt.debug.so是启用了断言、double free()检查等功能的调试版本；libkqmallocmt.profiler.so是启用了内存分析功能的分析版本，分析文件会保存在/tmp/kqmalloc_<进程名>CPU *<cpu_id>*.txt文件中。
+KQMalloc通过替换标准库中的内存分配函数实现性能优化。建议使用`LD_PRELOAD`预加载动态库，无需修改应用程序代码。
 
-以鲲鹏HIP12的多线程场景为例：
+以下使用方式无先后顺序，请根据鲲鹏处理器型号和指针标记支持情况选择。
+
+- 以HIP09处理器上启用指针标记特性的发布版本为例。
+
+    ```shell
+    kqmalloc_root=/path/to/kqmalloc-vX.Y.Z
+    LD_PRELOAD="$kqmalloc_root/HIP09/lib/libkqmalloc.ptag.so" ./run_your_application
+    ```
+
+- 如果系统或应用不支持指针标记，请使用`libkqmalloc.so`。
+
+    ```shell
+    kqmalloc_root=/path/to/kqmalloc-vX.Y.Z
+    LD_PRELOAD="$kqmalloc_root/HIP09/lib/libkqmalloc.so" ./run_your_application
+    ```
+
+- 也可以在编译应用程序时链接动态库。
+
+    ```shell
+    kqmalloc_root=/path/to/kqmalloc-vX.Y.Z
+    gcc -o run_your_application run_your_application.c \
+        -L"$kqmalloc_root/HIP09/lib" \
+        -lkqmalloc.ptag \
+        -Wl,-rpath="$kqmalloc_root/HIP09/lib"
+    ```
+
+## 验证KQMalloc
+
+设置`LD_PRELOAD`后，可在相同环境下执行`ldd`命令检查KQMalloc动态库是否已正确加载。
 
 ```shell
-export LD_PRELOAD=/<path to KQMalloc>/build/HIP12/lib/libkqmallocmt.so
+kqmalloc_root=/path/to/kqmalloc-vX.Y.Z
+LD_PRELOAD="$kqmalloc_root/HIP09/lib/libkqmalloc.ptag.so" ldd ./run_your_application
 ```
 
-同样，可以在GCC编译选项中添加动态库所在路径，链接需要使用的动态库文件。
-例如，若需要使用适配HIP12的KQMalloc请在编译时添加：**-L/<KQMalloc路径>/build/HIP12/lib/ -lkqmallocmt -Wl,-rpath=/<KQMalloc路径>/build/HIP12/lib/**。
-
-### 验证KQMalloc
-
-设置**LD_PRELOAD**环境变量或**rpath**编译路径后，可使用**ldd**命令检查是否成功链接KQMalloc库。正常链接结果如下。
+正常输出中应包含KQMalloc动态库，示例如下。
 
 ```text
-[root@localhost mmpm]# ldd test
-        linux-vdso.so.1 (0x0000ffff9ee6a000)
-        /home/kqmalloc/build/HIP12/lib/libkqmallocmt.so (0x0000ffff9b400000)
-        libmmpm.so => not found
-        libstdc++.so.6 => /usr/lib64/libstdc++.so.6 (0x0000ffff9b200000)
-        libm.so.6 => /usr/lib64/libm.so.6 (0x0000ffff9b150000)
-        libgcc_s.so.1 => /usr/lib64/libgcc_s.so.1 (0x0000ffff9b110000)
-        libc.so.6 => /usr/lib64/libc.so.6 (0x0000ffff9af60000)
-        /lib/ld-linux-aarch64.so.1 (0x0000ffff9ee2d000)
+libkqmalloc.ptag.so => /path/to/kqmalloc-vX.Y.Z/HIP09/lib/libkqmalloc.ptag.so (0x0000ffff6dac0000)
 ```
+
+## 移除KQMalloc
+
+1. 停止使用KQMalloc的应用程序。
+2. 取消应用程序的`LD_PRELOAD`或动态链接配置。
+3. 如果不再需要保留动态库，删除解压得到的KQMalloc版本目录。
+
+## 修订记录
+
+|发布日期|修订记录|
+|--|--|
+|2026-09-30|第三次正式发布。<br><ul><li>优化文档结构，按[获取软件包](#获取软件包)、[启用透明大页](#启用透明大页)、[使用KQMalloc](#使用kqmalloc)、[验证KQMalloc](#验证kqmalloc)和[移除KQMalloc](#移除kqmalloc)组织文档内容。</li><li>[更新V0.22预编译软件包的获取方式、目录结构及六种动态库的用途和选择原则。](#获取软件包)</li><li>更新[动态库预加载和编译链接示例](#使用kqmalloc)及[加载验证示例](#验证kqmalloc)，新增[KQMalloc移除方法](#移除kqmalloc)。</li></ul>|
