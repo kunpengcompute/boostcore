@@ -20,7 +20,7 @@
 ## V0.20
 
 - 单线程性能大幅提升。
-- 重新设计堆标记缓冲区：原三维数组[NUMA 节点][秩][存储单元]改为一维数组[偏移量 + 存储单元]。
+- 重新设计堆标记缓冲区：原三维数组(NUMA 节点)(秩)(存储单元)改为一维数组(偏移量 + 存储单元)。
 - 优化最大64MB的大对象高频分配逻辑，适配类MySQL业务负载场景。
 - 在不损失性能的前提下，显著降低生产者-消费者基准测试的内存占用。
 - 新增环境变量配置项：KQMALLOC_TINY_HEAP_CACHE_SIZE、KQMALLOC_SMALL_HEAP_CACHE_SIZE、KQMALLOC_MIDDLE_HEAP_CACHE_SIZE、KQMALLOC_QUICK_CACHE_THRESHOLD。

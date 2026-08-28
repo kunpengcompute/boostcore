@@ -117,4 +117,4 @@ libkqmalloc.ptag.so => /path/to/kqmalloc-vX.Y.Z/HIP09/lib/libkqmalloc.ptag.so (0
 
 |文档版本|发布日期|修改说明|
 |--|--|--|
-|01|2026-09-30|第一次正式发布。<br><ul><li>优化文档结构，按[获取软件包](#获取软件包)、[启用透明大页](#启用透明大页)、[使用KQMalloc](#使用kqmalloc)、[验证KQMalloc](#验证kqmalloc)和[移除KQMalloc](#移除kqmalloc)组织文档内容。</li><li>[更新V0.22预编译软件包的获取方式、目录结构及六种动态库的用途和选择原则。](#获取软件包)</li><li>更新[动态库预加载和编译链接示例](#使用kqmalloc)及[加载验证示例](#验证kqmalloc)，新增[KQMalloc移除方法](#移除kqmalloc)。</li></ul>|
+|01|2026-09-30|第一次正式发布。|
