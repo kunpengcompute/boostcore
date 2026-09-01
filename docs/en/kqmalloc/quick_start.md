@@ -1,116 +1,109 @@
 # Quick Start
 
-This document helps you quickly understand the usage and performance verification of KQMalloc.
+This document helps users quickly understand how to use the KQMalloc V0.22 precompiled dynamic libraries, their environment variables, and performance verification methods.
 
 ## Installation and Deployment
 
-For detailed steps on obtaining and using the dynamic library, refer to the [Installation Guide](./installation_guide.md). The compilation artifacts are shown in the table below.
+For detailed steps on obtaining and extracting the dynamic libraries, see the [Installation Guide](./installation_guide.md). KQMalloc V0.22 provides the following dynamic libraries.
 
 | Library File| Description|
 | ------- | ------ |
-| libkqmalloc.so | Single-threaded dynamic library|
-| libkqmallocmt.so | Multi-threaded dynamic library|
-| libkqmallocmt.debug.so | Debugging version, with assertions and double free check enabled|
-| libkqmallocmt.profiler.so | Profiling version, with memory profiling enabled|
+| `libkqmalloc.ptag.so` | Release version with the pointer tagging feature enabled |
+| `libkqmalloc.ptag.debug.so` | Debug version with pointer tagging, assertions, and double free() checking enabled |
+| `libkqmalloc.ptag.profiler.so` | Profiler version with pointer tagging and memory profiling enabled |
+| `libkqmalloc.so` | Release version with the pointer tagging feature disabled |
+| `libkqmalloc.debug.so` | Debug version with the pointer tagging feature disabled, with assertions and double free() checking enabled |
+| `libkqmalloc.profiler.so` | Profiler version with the pointer tagging feature disabled, with memory profiling enabled |
+
+All dynamic libraries are parallel allocators. When the allocator starts, it initializes in single-threaded mode and automatically switches to multi-threaded mode after a second thread is detected; this mode cannot be explicitly specified through an environment variable. Versions with the pointer tagging feature disabled are suitable for systems whose kernels do not support pointer tagging, or for apps that use pointer tagging themselves (such as Go and Java).
+
+The following commands use the release version with the pointer tagging feature enabled as an example.
+
+```shell
+kqmalloc_root=/path/to/kqmalloc-vX.Y.Z
+LD_PRELOAD="$kqmalloc_root/HIP09/lib/libkqmalloc.ptag.so" ./run_your_application
+```
 
 ## Environment Variables
 
-[**Table 1** Environment variables of KQMalloc](#kqmalloc-environment-variables) lists the environment variables that may need to be configured for using KQMalloc. Set the environment variables as required.
+KQMalloc supports the following environment variables in [**Table 1** KQMalloc environment variables](#kqmalloc-environment-variables). In the table, the default values distinguished by single-threaded mode and multi-threaded mode are automatically selected by the allocator based on its running state.
 
-**Table 1** Environment variables of KQMalloc<a id="kqmalloc-environment-variables"></a>
+**Table 1** KQMalloc environment variables<a id="kqmalloc-environment-variables"></a>
 
-| Variable| Description| Default Value| Value Range|
-| --------- | ------ | ------- | -------- |
-| KQMALLOC_ALIGNMENT | Sets the memory alignment size, in bytes.| 4 (incompatible with the C11 standard)| 4, 8, 16, 32, 64, 128 |
-| KQMALLOC_C11_COMPLIANT_PROCESSES | Sets the list of processes compatible with the C11 standard. The memory alignment size of these processes is 16 bytes by default.| Empty string| List of process names separated by colons (:), for example, **java8:java15**|
-| KQMALLOC_SINGLE_THREADED | Sets the thread mode of the program.| The value is empty for the normal version (automatic detection) and **0** for the slim version.| **0**: single-threaded mode <br> **1**: multi-threaded mode|
-| KQMALLOC_SLAB_CACHE_RATIO | Sets the maximum percentage of the slab size that can be cached to improve performance.| 20 | 0 to 100|
-| KQMALLOC_LOCAL_CACHE_RATIO | Sets the percentage of the local cache size of a thread.| 100 (single-threaded); 75 (multi-threaded)| 0 to 100|
-| KQMALLOC_USE_THP | Sets whether to use transparent huge pages.| 1 | **1**: Enabled <br> **0**: Disabled <br> **-1**: Not specified|
-| KQMALLOC_NUMA_AWARE | Sets the NUMA awareness mode.| 0 (single-threaded); 2 (multi-threaded)| **0**: NUMA awareness disabled <br> **1**: NUMA node-based management <br> **2**: CPU socket-based management|
-| KQMALLOC_TINY_THRESHOLD | Sets the microobject size threshold, in bytes.| 65536+CACHE_LINE_SIZE (single-threaded); 512 (multi-threaded)| 512 to 65536+CACHE_LINE_SIZE|
-| KQMALLOC_PROFILER_SECONDS | Sets the memory profiling interval, in seconds (valid only when the memory profiler is enabled).| 60.0 | 0 to 86400.0|
-| KQMALLOC_PROFILER_EXPONENT | Sets the memory profiling interval growth rate (valid only when the memory profiler is enabled).| 0.05 | 0-0.25 |
-| KQMALLOC_HEAP_CACHE_SIZE | Sets the maximum size of the heap space that can be cached, in megabytes.| 512 (single-threaded); 0 (multi-threaded)| ≥ 0|
-| KQMALLOC_HEAP_CACHE_RATIO | Sets the maximum percentage of the heap space that can be cached.| 75 (single-threaded); 100 (multi-threaded)| 0 to 100|
-| KQMALLOC_DIRTY_THRESHOLD | Sets the maximum number of dirty pages in each heap.| 256 | ≥ 0|
-| KQMALLOC_TINY_HEAP_CACHE_SIZE | Functions the same as KQMALLOC_HEAP_CACHE_SIZE, but only controls the tiny object heap (the upper limit of allocation size is approximately 1,024 bytes). | 512 (single-threaded), 0 (multi-threaded) | ≥ 0 |
-| KQMALLOC_SMALL_HEAP_CACHE_SIZE | Functions the same as KQMALLOC_HEAP_CACHE_SIZE, but only acts on the small object heap (up to approximately 128 KB). | 512 (single-threaded), 0 (multi-threaded) | ≥ 0 |
-| KQMALLOC_MIDDLE_HEAP_CACHE_SIZE | Functions the same as KQMALLOC_HEAP_CACHE_SIZE, but only controls the middle object heap (the upper limit of memory is approximately 128 MB). Objects allocated via `aligned_alloc()` or `calloc()` are not controlled by this environment variable. | 512 (single-threaded), 0 (multi-threaded) | ≥ 0 |
-| KQMALLOC_QUICK_CACHE_THRESHOLD | Controls the unconditional quick caching of middle-sized objects within the quick heap (object allocation range: 128 KB to 64 MB). | 1050624 (CACHE_LINE_SIZE=128), 1049600 (CACHE_LINE_SIZE=64) | ≥ 0 |
+| Variable Name | Description | Default Value | Value Range |
+|---------|------|-------|-------|
+| KQMALLOC_ALIGNMENT | Sets the alignment size of object addresses, in bytes. Invalid values are ignored. | 4 in single-threaded mode; 16 in multi-threaded mode | 4, 8, 16, 32, 64; 128 is also supported when the cache line size is 128 bytes. |
+| KQMALLOC_C11_COMPLIANT_PROCESSES | Sets the list of processes forced to use C11-compliant 16-byte pointer alignment, and affects the default value of KQMALLOC_ALIGNMENT. | java | A list of process names separated by ":", such as java8:java15 |
+| KQMALLOC_SLAB_CACHE_RATIO | Sets the maximum ratio of slab space that the allocator can cache to improve performance. | 20 | 0-100 |
+| KQMALLOC_LOCAL_CACHE_RATIO | Sets the relative size of the thread-local cache for tiny and small objects at each size class. This can be used to increase or decrease the local cache capacity. | 100.0 | 0.0-1000.0 |
+| KQMALLOC_LOCAL_CACHE_MIN | Sets the minimum physical capacity of the thread-local cache for tiny and small objects at each size class. It takes effect after KQMALLOC_LOCAL_CACHE_RATIO. | 2 in normal mode; 0 in oversubscription mode | 0-1000 |
+| KQMALLOC_LOCAL_CACHE_MAX | Sets the maximum physical capacity of the thread-local cache for tiny and small objects at each size class. It takes effect after KQMALLOC_LOCAL_CACHE_RATIO. | 1000 | 0-10000 |
+| KQMALLOC_LOCAL_CACHE_LOW | Sets the dynamic minimum capacity of the thread-local cache for regular objects. Increasing this value may reduce latency but increases memory usage. | 0 | 0-1000 |
+| KQMALLOC_ALIGNED_LOCAL_CACHE_LOW | Sets the dynamic minimum capacity of the thread-local cache for aligned objects. Increasing this value may reduce latency but increases memory usage. | 0 | 0-1000 |
+| KQMALLOC_USE_THP | Sets whether to explicitly control transparent huge pages through madvise(); -1 means madvise() is not called. | 1 for the 4 KB system page and 2 MB huge page scenarios; 0 for other scenarios | -1, 0, 1 |
+| KQMALLOC_NUMA_AWARE | Sets the NUMA-aware mode. | 2 | 0: disabled; 1: NUMA node granularity; 2: CPU socket granularity; 3: Map system NUMA nodes to 4 internal heap groups in a round-robin manner |
+| KQMALLOC_TINY_THRESHOLD | Sets the threshold for tiny object size, in bytes. | 4096 in single-threaded mode; 512 in multi-threaded mode | 512-4096 |
+| KQMALLOC_LOCAL_THRESHOLD | Sets the threshold for the object size that can be cached in the thread-local cache, in bytes; setting it to 0 disables this type of thread-local cache. | 512 | 0-262208 (64-byte cache line); 0-262272 (128-byte cache line) |
+| KQMALLOC_ALIGNED_LOCAL_THRESHOLD | Same functionality as KQMALLOC_LOCAL_THRESHOLD, but applies only to aligned objects allocated by aligned_alloc(), memalign(), posix_memalign(), valloc(), and pvalloc(); setting it to 0 disables this type of thread-local cache. | Cache line size (64 or 128) | 0-524288 |
+| KQMALLOC_PROFILER_SECONDS | Sets the memory profiling interval, in seconds, effective only when the memory profiler is enabled. | 60.0 | 0.001-86400.0 |
+| KQMALLOC_PROFILER_EXPONENT | Sets the exponential growth rate of the memory profiling interval over program runtime, effective only when the memory profiler is enabled. | 0.05 | 0.0-0.25 |
+| KQMALLOC_HEAP_CACHE_SIZE | Sets the maximum heap header margin that the allocator can cache, in megabytes, and is limited by KQMALLOC_HEAP_CACHE_RATIO. | 900 in single-threaded mode; 0 in multi-threaded mode | Greater than or equal to 0 |
+| KQMALLOC_TINY_HEAP_CACHE_SIZE | Same functionality as KQMALLOC_HEAP_CACHE_SIZE, but applies only to tiny object heaps. | Same as KQMALLOC_HEAP_CACHE_SIZE | Greater than or equal to 0 |
+| KQMALLOC_SMALL_HEAP_CACHE_SIZE | Same functionality as KQMALLOC_HEAP_CACHE_SIZE, but applies only to small object heaps (up to about 256 KB). | Same as KQMALLOC_HEAP_CACHE_SIZE | Greater than or equal to 0 |
+| KQMALLOC_MIDDLE_HEAP_CACHE_SIZE | Same functionality as KQMALLOC_HEAP_CACHE_SIZE, but applies only to middle object heaps (up to about 64 MB); objects allocated by aligned_alloc() and calloc() may not be affected by it. | Same as KQMALLOC_HEAP_CACHE_SIZE | Greater than or equal to 0 |
+| KQMALLOC_HEAP_CACHE_RATIO | Sets the maximum ratio of the cacheable heap header margin to the peak heap size, and is limited by KQMALLOC_HEAP_CACHE_SIZE. | 100 | 0-100 |
+| KQMALLOC_DIRTY_THRESHOLD | Sets the upper limit of the dirty page cache size in each heap, in megabytes; it does not include the heap header margin controlled by KQMALLOC_HEAP_CACHE_SIZE. | 1024 | Greater than or equal to 2 |
+| KQMALLOC_QUICK_CACHE_THRESHOLD | Sets the unconditional quick cache threshold for middle objects (about 256 KB to 64 MB) in the FAST heap, in bytes. | 1050624 for 128-byte cache line; 1049600 for 64-byte cache line | Greater than or equal to 0 |
+| KQMALLOC_EXCLUDE | Sets the object size classes that are not used, which can improve alignment and reduce cache misses. | "112;224;240" in single-threaded mode; an empty string in multi-threaded mode | A list of object size classes separated by ";" |
 
 ### Environment Variable Configuration Example
 
-The following uses `KQMALLOC_ALIGNMENT` as an example:
+Environment variables can take effect only for the current app. The following example sets the object address alignment size to 16 bytes.
 
-1. Open the **/etc/profile** file.
+```shell
+kqmalloc_root=/path/to/kqmalloc-vX.Y.Z
+KQMALLOC_ALIGNMENT=16 \
+LD_PRELOAD="$kqmalloc_root/HIP09/lib/libkqmalloc.ptag.so" \
+./run_your_application
+```
 
-    ```shell
-    vi /etc/profile
-    ```
-
-2. Press **i** to enter the insert mode and add the following content to the **/etc/profile** file:
-
-    ```shell
-    export KQMALLOC_ALIGNMENT=16
-    ```
-
-3. Run the **source** command for the environment variable to take effect.
-
-    ```shell
-    source /etc/profile
-    ```
+If long-term effect is required, the environment variables can also be written into the app's startup script or service configuration file.
 
 ## Verifying the Acceleration Effect
 
-The following uses the malloc_benchmark test case as an example to describe how to verify the performance improvement of KQMalloc.
-
-### Test Environment
-
-- Processor: Kunpeng 920
-- Number of threads: 320
-- Kernel page table size: 64 KB
-- KQMalloc version: v0.19.1
-- OS version: openEuler 24.03 (LTS-SP1)
+The precompiled delivery package contains only the dynamic libraries. Use the actual business program or the customer's existing performance test program to perform A/B testing on the system default memory library and KQMalloc.
 
 ### Test Procedure
 
-Use the default system memory library and KQMalloc memory library for the tests.
+1. Ensure that the two tests use the same hardware, operating system, input data, thread binding method, system load, and app configuration.
 
-**Run a test using the default system memory library.**
+2. Run the app using the system default memory library, and record the elapsed time and maximum resident set size.
 
- ```shell
- bin/malloc_benchmark -mode 1 -threads 320
- ```
+    ```shell
+    /usr/bin/time -v -o system-default.time ./run_your_application
+    ```
 
-**Run a test with the KQMalloc memory library enabled.**
+3. Preload KQMalloc under the same conditions and run again.
 
- ```shell
- LD_PRELOAD=/<path to KQMalloc>/lib/libkqmallocmt.so bin/malloc_benchmark -mode 1 -threads 320
- ```
+    ```shell
+    kqmalloc_root=/path/to/kqmalloc-vX.Y.Z
+    /usr/bin/time -v -o kqmalloc.time \
+        env LD_PRELOAD="$kqmalloc_root/HIP09/lib/libkqmalloc.ptag.so" \
+        ./run_your_application
+    ```
 
-### Result Comparison
+4. Compare the `Elapsed (wall clock) time` and `Maximum resident set size` in the two outputs. It is recommended to run multiple times and take the median to reduce the impact of system jitter.
 
-Compare the running time (`Time`), average memory usage (`Average RSS`), and maximum memory usage (`Max RSS`) to verify the performance improvement of KQMalloc.
-
-**Results when the default memory library is used:**
-
-```text
-Mode: 1, Time: 259.727 seconds, Average RSS: 4.507 GB, Max RSS: 4.794 GB.
-```
-
-**Results after KQMalloc is enabled:**
+The running time improvement ratio can be calculated using the following formula.
 
 ```text
-Mode: 1, Time: 68.805 seconds, Average RSS: 0.627 GB, Max RSS: 0.720 GB.
+(System default library runtime - KQMalloc runtime) / System default library runtime × 100%
 ```
 
-### Performance Analysis
+Results depend on CPU, OS, workload, thread binding, and environment variable configuration. Always verify with your own environment measurements.
 
-| Metric| KQMalloc | Default Memory Library| Improvement (Percentage)|
-| ------ | ---------- | -------------- | --------- |
-| Time | 68.805 seconds| 259.727 seconds| Improved by 73.5%|
-| Average RSS | 0.627 GB | 4.507 GB | Reduced by 86.1%|
-| Max RSS | 0.720 GB | 4.794 GB | Reduced by 85.0%|
+## Change History
 
-The test results show that KQMalloc significantly reduces the running time and memory usage.
+|Document Version|Date|Description|
+|--|--|--|
+|01|2026-09-30|This is the third official release.|

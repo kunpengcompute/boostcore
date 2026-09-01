@@ -1,30 +1,53 @@
 # Installation Guide
 
+This document describes how to obtain, use, and remove the KQMalloc V0.22 precompiled dynamic library. KQMalloc is delivered as a compressed package, and the dynamic library contained in it can be used directly after decompression.
+
 ## Verified Environments
 
 To use KQMalloc smoothly and securely, ensure that your environment is one of the verified environments.
 
-| OS | CPU | Compiler |
-| ------------------------- | --------- | ---------------------------- |
-| openEuler 20.03 LTS SP1 | Kunpeng 920 series | GCC 7.3.0 / BiSheng 4.2.0 |
-| openEuler 22.03 LTS SP3 | Kunpeng 920 series | GCC 10.3.1 / BiSheng 4.2.0 |
-| openEuler 24.03 LTS SP3 | Kunpeng 950 | GCC 12.3.1 / Clang 14.0.6 |
+| Operating System | CPU Type | Compiler |
+| ------------------------- | --------- | ------------------ |
+| openEuler 20.03 LTS SP1 | Kunpeng processor | GCC 7.3.0 / BiSheng 4.2.0 |
+| openEuler 22.03 LTS SP3 | Kunpeng processor | GCC 10.3.1 / BiSheng 4.2.0 |
+| openEuler 24.03 LTS SP3 | Kunpeng processor | GCC 12.3.1 / Clang 14.0.6 |
 
 Download a required openEuler version from [Download Center](https://www.openeuler.openatom.cn/en/download/?archive=true).
 
 >![](public_sys-resources/icon-notice.gif) **NOTICE**
 >
->- KQMalloc supports only Kunpeng processors and will exit abnormally for any other processors. If a program dynamically loads KQMalloc, the program exits when KQMalloc is linked and an undefined result will be generated.
->- KQMalloc does not support GCC 7.3.0 or earlier.
->- KQMalloc is a primitive library whose computing process involves memory read, write, and allocation. KQMalloc does not provide or release an OS, or take responsibility for the OS security. You need to install an OS by yourself and perform security hardening, such as installing only necessary applications or uninstalling unnecessary applications that have been installed.
+>- KQMalloc currently supports only Kunpeng processors. When KQMalloc is used on other processors, it exits abnormally. If KQMalloc is loaded dynamically, the program exits when linking KQMalloc, causing undefined results.
+>- KQMalloc does not support GCC versions earlier than 7.3.0.
+>- KQMalloc is a primitive library, and its computing process involves operations such as memory read/write and allocation. KQMalloc does not provide or release an operating system, which must be installed by the user. Users need to harden the operating system security based on their own apps, including not installing or removing unnecessary apps.
 
-## Usage Method
+## Obtaining the Software Package
 
-Before using KQMalloc, obtain the KQMalloc binary compressed file <code>kqmalloc-xxx.tar.gz</code> (xxx represents th version number, e.g, v0.20.0) from the [official website](https://repo.boostkit.osinfra.cn/boostcore/kqmalloc/release/), you can obtain the KQMalloc dynamic library after decompressing the file.
+1. Go to the [KQMalloc release directory](https://repo.boostkit.osinfra.cn/boostcore/kqmalloc/release/) and select the subdirectory of the required version.
 
-### Enabling Transparent Huge Pages
+2. Download the `kqmalloc-vX.Y.Z.tar.gz` package from the subdirectory, where `X.Y.Z` indicates the version number. If the download page provides a checksum file, verify the package integrity as instructed on the page.
 
-Before running the application, it is recommended to confirm the system page size and enable the Transparent Huge Pages (THP) feature.
+3. Decompress the package.
+
+    ```shell
+    tar -xzf kqmalloc-vX.Y.Z.tar.gz
+    ```
+
+The decompressed directory is organized by processor models. The `lib` subdirectory of each processor directory contains the following dynamic libraries.
+
+| Library File | Description |
+| ------- | ---- |
+| `libkqmalloc.ptag.so` | Release version with the pointer tagging feature enabled |
+| `libkqmalloc.ptag.debug.so` | Debug version with the pointer tagging feature, assertions, and double free() checks enabled |
+| `libkqmalloc.ptag.profiler.so` | Profiler version with the pointer tagging feature and memory profiling enabled |
+| `libkqmalloc.so` | Release version with the pointer tagging feature disabled |
+| `libkqmalloc.debug.so` | Debug version with the pointer tagging feature disabled and assertions and double free() checks enabled |
+| `libkqmalloc.profiler.so` | Profiler version with the pointer tagging feature disabled and memory profiling enabled |
+
+All the dynamic libraries above are parallel allocators. When the allocator starts, it is initialized in single-threaded mode and automatically switches to multi-threaded mode after a second thread is detected. Versions with the pointer tagging feature disabled are suitable for systems whose kernels do not support pointer tagging, or for apps that use pointer tagging themselves (such as Go and Java). Memory profiling files are saved in `/tmp/kqmalloc_<process_name>_CPU<cpu_id>_<ticks>.txt`.
+
+## Enabling Transparent Huge Pages
+
+Before running the app, it is recommended to first check the system page size and enable Transparent Huge Pages (THP).
 
 ```shell
 getconf PAGESIZE
@@ -32,7 +55,7 @@ echo always > /sys/kernel/mm/transparent_hugepage/enabled
 echo madvise > /sys/kernel/mm/transparent_hugepage/defrag
 ```
 
-If THP have been successfully enabled on the system, the following status will be displayed:
+If THP has been successfully enabled, the following status is displayed.
 
 ```text
 [root@localhost ~]# cat /sys/kernel/mm/transparent_hugepage/enabled
@@ -41,32 +64,61 @@ If THP have been successfully enabled on the system, the following status will b
 always defer defer+madvise [madvise] never
 ```
 
-### Using KQMalloc
+## Using KQMalloc
 
-KQMalloc takes effect simply by using the preloading method, which optimizes memory-related functions in the standard library.
-Please select the files under the corresponding directory based on the Kunpeng processor model you use.
-Among them, `libkqmalloc.so` is the single-threaded version of the library; `libkqmallocmt.so` is the multi-threaded version of the library; `libkqmallocmt.debug.so` is the debugging version with assertions, `double free()` checks, and other features enabled; `libkqmallocmt.profiler.so` is the profiling version with memory profiling features enabled, and the profiling files will be saved in the `/tmp/kqmalloc_<process_name>CPU<cpu_id>.txt` file.
+KQMalloc optimizes performance by replacing the memory allocation functions in the standard library. It is recommended to preload the dynamic library using `LD_PRELOAD`, which requires no modification to the app code.
 
-Taking the multi-threaded scenario as an example:
+The following usage methods are not ordered by priority. Select one based on the Kunpeng processor model and pointer tagging support.
+
+- Take the release version with the pointer tagging feature enabled as an example.
+
+    ```shell
+    kqmalloc_root=/path/to/kqmalloc-vX.Y.Z
+    LD_PRELOAD="$kqmalloc_root/HIP09/lib/libkqmalloc.ptag.so" ./run_your_application
+    ```
+
+- If the system or app does not support pointer tagging, use `libkqmalloc.so`.
+
+    ```shell
+    kqmalloc_root=/path/to/kqmalloc-vX.Y.Z
+    LD_PRELOAD="$kqmalloc_root/HIP09/lib/libkqmalloc.so" ./run_your_application
+    ```
+
+- The dynamic library can also be linked when compiling the app.
+
+    ```shell
+    kqmalloc_root=/path/to/kqmalloc-vX.Y.Z
+    gcc -o run_your_application run_your_application.c \
+        -L"$kqmalloc_root/HIP09/lib" \
+        -lkqmalloc.ptag \
+        -Wl,-rpath="$kqmalloc_root/HIP09/lib"
+    ```
+
+## Verifying KQMalloc
+
+After `LD_PRELOAD` is set, the `ldd` command can be executed in the same environment to check whether the KQMalloc dynamic library has been loaded correctly.
 
 ```shell
-export LD_PRELOAD=/<path to KQMalloc>/build/HIP12/lib/libkqmallocmt.so
+kqmalloc_root=/path/to/kqmalloc-vX.Y.Z
+LD_PRELOAD="$kqmalloc_root/HIP09/lib/libkqmalloc.ptag.so" ldd ./run_your_application
 ```
 
-Similarly, you can add the path where the dynamic library is located to the GCC compilation options to link the dynamic library file that needs to be used.
-
-### Verifying KQMalloc
-
-After setting the `LD_PRELOAD` environment variable or the `rpath` compilation path, you can use the `ldd` command to check whether the KQMalloc library is successfully linked. The normal linking result is as follows:
+The normal output should include the KQMalloc dynamic library, as shown in the following example.
 
 ```text
-[root@localhost mmpm]# ldd test
-        linux-vdso.so.1 (0x0000ffff9ee6a000)
-        /home/kqmalloc/build/HIP12/lib/libkqmallocmt.so (0x0000ffff9b400000)
-        libmmpm.so => not found
-        libstdc++.so.6 => /usr/lib64/libstdc++.so.6 (0x0000ffff9b200000)
-        libm.so.6 => /usr/lib64/libm.so.6 (0x0000ffff9b150000)
-        libgcc_s.so.1 => /usr/lib64/libgcc_s.so.1 (0x0000ffff9b110000)
-        libc.so.6 => /usr/lib64/libc.so.6 (0x0000ffff9af60000)
-        /lib/ld-linux-aarch64.so.1 (0x0000ffff9ee2d000)
+libkqmalloc.ptag.so => /path/to/kqmalloc-vX.Y.Z/HIP09/lib/libkqmalloc.ptag.so (0x0000ffff6dac0000)
 ```
+
+## Removing KQMalloc
+
+1. Stop the apps that use KQMalloc.
+
+2. Remove the `LD_PRELOAD` or dynamic linking configuration of the apps.
+
+3. If the dynamic library is no longer needed, delete the extracted KQMalloc version directory.
+
+## Change History
+
+|Document Version|Date|Description|
+|--|--|--|
+|01|2026-09-30|This is the third official release.|
