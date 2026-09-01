@@ -1,52 +1,58 @@
-# KQMalloc
+# KQMalloc Introduction
+
+## Latest News
+
+- \[2026-09-30 \]: Released KQMalloc V0.22, which significantly improves the performance of aligned allocation functions such as aligned_alloc(), as well as valloc() and pvalloc(), for Kunpeng 930; added an aligned-object local cache threshold and two types of local cache low-watermark configurations to reduce allocation overhead.
 
 ## Project Introduction
 
-KQMalloc is a memory allocator designed for Kunpeng processors and is suitable for Linux environments with 4 KB or 64 KB system page size and 48-bit virtual memory addresses.
-KQMalloc uses techniques such as transparent huge pages to minimize translation lookaside buffer (TLB) misses, reduce cache fragmentation, and mitigate cache aliases.
-This allocator supports both single-threaded and multi-threaded applications, significantly improving performance.
+This document applies to KQMalloc V0.22.
 
-Application scenarios: memory allocation and deallocation
+KQMalloc is a parallel memory allocator designed specifically for Kunpeng processors, adapted and optimized for system scenarios with 4 KB and 64 KB system page sizes and 48-bit memory virtual addresses under the Linux operating system.
+The allocator runs in single-threaded mode during initialization and automatically switches to multi-threaded mode after a second thread is detected. Starting from V0.21, KQMalloc no longer provides a separate single-threaded dynamic library.
+KQMalloc uses technologies such as transparent huge pages to minimize TLB misses and reduce cache fragmentation and cache aliasing issues.
 
-## Description
+Applicable scenarios: memory allocation and deallocation
+
+## Feature Introduction
 
 **Table 1** KQMalloc features
 
-|  Feature| Description |
+| Feature | Description |
 | ------------ | ------------ |
-|  Multi-level lock-free cache fast path| Each thread has its own independent local cache. Small object allocation requires no more than 10 instructions and involves no locking throughout the process. When a miss occurs, it falls back to allocating from the Quick Cache (a lock-free cache using atomic CAS operations) and the Fast Cache (an adaptive-capacity shared cache).|
-|  Lazy release and in-place resize of Transparent Huge Pages (THP)| When releasing memory, use MADV_FREE for lazy reclamation, marking pages as reclaimable but not immediately returning them, which reduces system calls. For large objects, realloc adjusts the size in place through virtual memory commit/decommit, avoiding the need to allocate new memory and copy data.|
-|  Fine-grained size classes and low-fragmentation heap selection| Objects are divided into more than 100 size classes. Small objects are classified with a 4-byte step, and large objects are classified with a cache line step. During each allocation, the closest matching slot is selected.|
-|  Bidirectional heap dirty page reclaiming| **Tail Clean**: When the resident memory of the heap exceeds a threshold, release excess tail pages using **MADV_DONTNEED**. <br>**Heap Compression**: Reclaim the tail virtual address space. <br>**Body Clean**: Sort and merge the freed middle regions to extend them towards adjacent free cells, aligning them to page boundaries. These aligned regions can then be uniformly released, reducing memory fragmentation.|
+| Multi-level lock-free cache fast path | Each thread has its own independent local cache. Small-object allocation requires fewer than 10 instructions and no locking throughout the entire process. On a cache miss, allocation falls back level by level to the Quick Cache (a lock-free cache using CAS atomic operations) and the Fast Cache (a shared cache with adaptive capacity). |
+| In-place resize of large objects | Large-object realloc adjusts the size in place through virtual memory commit/decommit, avoiding the allocation of new memory and subsequent copying. |
+| Fine-grained size classes and low-fragmentation heap selection | Objects are classified into more than 100 size classes. Small objects use a 4-byte step and large objects use a cache-line step, so each allocation matches the closest slot. |
+| Bidirectional heap dirty-page reclamation | Tail clean: Release the excess pages at the tail using MADV_DONTNEED when heap residency exceeds the threshold.<br>Compression: Reclaim the virtual address space at the tail.<br>Body clean: Sort and merge the freed middle regions to extend them towards adjacent free cells, aligning them to page boundaries before uniformly releasing them. |
 
 ## Release Notes
 
-For details about the description of the KQMalloc memory allocator of each version, see [Release Notes](./release_notes.md).
+The release notes for the KQMalloc memory allocator provide detailed descriptions of each KQMalloc version. For details, see [Release Notes](./release_notes.md).
 
 ## Installation and Deployment
 
-The installation guide of KQMalloc provides instructions for obtaining and using the dynamic library. For details, see [Installation Guide](./installation_guide.md).
+The installation guide for the KQMalloc memory allocator, including how to obtain the dynamic libraries and how to use them. For details, see [Installation Guide](./installation_guide.md).
 
 ## Quick Start
 
-The quick start guide of KQMalloc provides instructions for environment variables and acceleration examples. For details, see [Quick Start](./quick_start.md).
+The quick start guide for the KQMalloc memory allocator, including environment variables and acceleration examples. For details, see [Quick Start](./quick_start.md).
 
-## Document
+## Documentation
 
-| Name| Description|
+| Resource Name | Resource Introduction |
 | ------------ | ------------ |
-| [Release Notes](./release_notes.md)| Provides the feature updates, resolved issues, and known restrictions of each version.|
-| [Quick Start](./quick_start.md)| Describes the basic concepts, installation, usage, and performance verification of KQMalloc.|
-| [Installation Guide](./installation_guide.md)| Describes the environment requirements, software package obtaining, installation procedure, and uninstallation method of KQMalloc.|
-| [API Reference](./api_reference.md)| Provides the detailed descriptions and usage examples of functions such as malloc, calloc, realloc, and free.|
+| [Release Notes](./release_notes.md) | Records feature updates, bug fixes, and known limitations of each version. |
+| [Quick Start](./quick_start.md) | Introduces the basic concepts, installation and deployment, usage, and performance verification of KQMalloc to help users get started quickly. |
+| [Installation Guide](./installation_guide.md) | Describes in detail the environment requirements, acquisition of precompiled dynamic libraries, usage, verification, and removal methods of KQMalloc. |
+| [API Reference](./api_reference.md) | Provides detailed descriptions and usage examples of functions such as malloc, calloc, realloc, and free. |
 
-## Contribution Statement
+## Issue Feedback
 
-We welcome your contributions to the community. If you have any questions/suggestions or want to provide feedback on feature requirements and bug reports, you can submit issues. For details, see the contribution guideline.
+If you encounter any problems or have suggestions during use, or need to report feature requirements and bugs, you can submit [issues](https://gitcode.com/boostkit/boostcore/issues/create/choose) to contact us.
 
 ## Disclaimer
 
-This code repository contributes to the KQMalloc open-source project solely for performance optimization. It strictly adheres to the coding style and methods, as well as security design of the native open-source software. Any vulnerability and security issues of the software shall be resolved by the corresponding upstream communities according to their response mechanisms. Please pay attention to the notifications and version updates released by the upstream communities. The Kunpeng computing community does not assume any responsibility for software vulnerabilities and security issues.
+This directory provides the supporting documentation for the KQMalloc precompiled dynamic libraries. Actual functionality, compatibility, and performance are subject to the delivered version and runtime environment in use. Please closely follow version updates and security notices, and complete operating system security hardening in accordance with your business scenarios.
 
 ## License
 
