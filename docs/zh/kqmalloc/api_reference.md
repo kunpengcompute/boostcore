@@ -1,12 +1,12 @@
 # API参考
 
-## 函数说明
+## KQMalloc介绍
 
 KQMalloc是专为鲲鹏处理器设计的内存分配器，适配Linux操作系统4KB和64KB系统页、48位内存虚拟地址的系统场景。KQMalloc使用透明大页等技术减少页表缓冲未命中、缓存碎片和缓存别名。本文档详细介绍malloc、calloc、realloc和free函数。
 
 以下示例以HIP09处理器目录中的V0.22预编译`libkqmalloc.ptag.so`为例。请将`/path/to/kqmalloc-vX.Y.Z`替换为实际解压目录。
 
-## 函数定义
+## 函数介绍
 
 ### malloc
 
@@ -79,7 +79,7 @@ int main(void)
 
     运行结果如下。
 
-    ```text
+    ```output
     malloc pointer address: 0xffff97ae8174
     ```
 
@@ -91,7 +91,7 @@ int main(void)
 
     验证结果应包含KQMalloc动态库，示例如下。
 
-    ```text
+    ```output
     libkqmalloc.ptag.so => /path/to/kqmalloc-vX.Y.Z/HIP09/lib/libkqmalloc.ptag.so (0x0000ffff6dac0000)
     ```
 
@@ -167,7 +167,7 @@ int main(void)
 
     运行结果如下。
 
-    ```text
+    ```output
     calloc pointer address: 0xffffafe4c690
     ```
 
@@ -261,7 +261,7 @@ int main(void)
 
     运行结果如下。
 
-    ```text
+    ```output
     old_pointer address: 0xffff921c8174
     new_pointer address: 0xffff921c87ec
     new_pointer test data: 0 1 2 3 4 5 6 7 8 9
@@ -289,7 +289,7 @@ void free(void *p);
 
 参见malloc函数示例。
 
->![](public_sys-resources/icon-note.gif) **说明：**
+>![表示说明的图片](public_sys-resources/icon-note.gif) **说明：**
 >示例中的指针地址以实际运行结果为准。
 
 ## 修订记录

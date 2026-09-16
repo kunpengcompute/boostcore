@@ -1,10 +1,84 @@
 # Release Notes
 
+## Version Mapping
+
+### Product Information
+
+<a name="table62675726"></a>
+
+<table><tbody><tr id="row41561572"><th class="firstcol" valign="top" width="42.17%" id="mcps1.1.3.1.1"><p id="p11044137"><a name="p11044137"></a><a name="p11044137"></a>Product Name</p>
+</th>
+<td class="cellrowborder" valign="top" width="57.830000000000005%" headers="mcps1.1.3.1.1 "><p id="p1597721693713"><a name="p1597721693713"></a><a name="p1597721693713"></a>Kunpeng BoostKit</p>
+</td>
+</tr>
+<tr id="row24726251"><th class="firstcol" valign="top" width="42.17%" id="mcps1.1.3.2.1"><p id="p56669300"><a name="p56669300"></a><a name="p56669300"></a>Product Version</p>
+</th>
+<td class="cellrowborder" valign="top" width="57.830000000000005%" headers="mcps1.1.3.2.1 "><p id="p11923034"><a name="p11923034"></a><a name="p11923034"></a><span id="text14311218114"><a name="text14311218114"></a><a name="text14311218114"></a>26.2.RC1</span></p>
+</td>
+</tr>
+<tr id="row1930811171892"><th class="firstcol" valign="top" width="42.17%" id="mcps1.1.3.3.1"><p id="p2030912172097"><a name="p2030912172097"></a><a name="p2030912172097"></a>Software Name</p>
+</th>
+<td class="cellrowborder" valign="top" width="57.830000000000005%" headers="mcps1.1.3.3.1 "><p id="p1730912179911"><a name="p1730912179911"></a><a name="p1730912179911"></a><span id="text17191017111119"><a name="text17191017111119"></a><a name="text17191017111119"></a>kqmalloc</span></p>
+</td>
+</tr>
+<tr id="row19308111718"><th class="firstcol" valign="top" width="42.17%" id="mcps1.1.3.3.1"><p id="p2030912172097"><a name="p2030912172097"></a><a name="p2030912172097"></a>Software Version</p>
+</th>
+<td class="cellrowborder" valign="top" width="57.830000000000005%" headers="mcps1.1.3.3.1 "><p id="p1730912179911"><a name="p1730912179911"></a><a name="p1730912179911"></a><span id="text17191017111119"><a name="text17191017111119"></a><a name="text17191017111119"></a>V0.22</span></p>
+</td>
+</tr>
+</tbody>
+</table>
+
+### OS, Compiler, and CPU Compatibility
+
+| OS | CPU Type | Compiler |
+| ----------------- | --------- | ------------------ |
+| openEuler 20.03 LTS SP1 | Kunpeng processor | GCC 7.3.0 / BiSheng 4.2.0 |
+| openEuler 22.03 LTS SP3 | Kunpeng processor | GCC 10.3.1 / BiSheng 4.2.0 |
+| openEuler 24.03 LTS SP3 | Kunpeng processor | GCC 12.3.1 / clang 14.0.6 |
+
+## Important Notes
+
+For details, see [Installation Guide](../../en/kqmalloc/installation_guide.md).
+
 ## V0.22
+
+### Feature Updates
 
 - Achieved a significant improvement in the performance of the aligned_alloc(), memalign(), posix_memalign(), valloc(), and pvalloc() functions.
 
 - Added the KQMALLOC_ALIGNED_LOCAL_THRESHOLD, KQMALLOC_LOCAL_CACHE_LOW, and KQMALLOC_ALIGNED_LOCAL_CACHE_LOW environment variables.
+
+**Modified Features<a name="zh-cn_topic_0000002518399190_section16450949161512"></a>**
+
+None
+
+**Removed Features <a name="zh-cn_topic_0000002518399190_section9218125814159"></a>**
+
+None
+
+### Resolved Issues
+
+None
+
+### Known Issues
+
+None
+
+## Related Documentation
+
+### V0.22 Documentation
+
+|Document Name|Description|Delivery Format|
+|--|---|---|
+|Release Notes|Provides version release information for kqmalloc.|Open-source repository|
+|Installation Guide|Provides installation and usage instructions for kqmalloc.|Open-source repository|
+|Quick Start|Provides a quick start guide for kqmalloc.|Open-source repository|
+|API Reference|Provides API usage instructions for kqmalloc.|Open-source repository|
+
+### Obtaining Documentation
+
+Visit the [open-source repository](https://gitcode.com/boostkit/boostcore/blob/master/docs/en/kqmalloc/README_EN.md) to view or download related documents.
 
 ## V0.21
 

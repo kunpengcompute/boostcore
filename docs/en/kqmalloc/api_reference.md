@@ -1,12 +1,12 @@
 # API Reference
 
-## Functions
+## KQMalloc Introduction
 
 KQMalloc is a memory allocator designed for Kunpeng processors and is suitable for Linux environments with 4 KB or 64 KB system page size and 48-bit virtual memory addresses. KQMalloc uses technologies such as transparent huge pages to reduce TLB misses, cache fragmentation, and cache aliasing. This document describes the malloc, calloc, realloc, and free functions in detail.
 
 The following examples use the V0.22 precompiled `libkqmalloc.ptag.so` in the processor directory as an example. Replace `/path/to/kqmalloc-vX.Y.Z` with the actual decompression directory.
 
-## Function Definitions
+## Function Introduction
 
 ### malloc
 
@@ -80,7 +80,7 @@ Compile and run the malloc function example by following these steps.
 
     The run result is as follows.
 
-    ```text
+    ```output
     malloc pointer address: 0xffff97ae8174
     ```
 
@@ -92,7 +92,7 @@ Compile and run the malloc function example by following these steps.
 
     The verification result should contain the KQMalloc dynamic library, as shown in the following example.
 
-    ```text
+    ```output
     libkqmalloc.ptag.so => /path/to/kqmalloc-vX.Y.Z/HIP09/lib/libkqmalloc.ptag.so (0x0000ffff6dac0000)
     ```
 
@@ -169,7 +169,7 @@ Compile and run the calloc function example by following these steps.
 
     The run result is as follows.
 
-    ```text
+    ```output
     calloc pointer address: 0xffffafe4c690
     ```
 
@@ -264,7 +264,7 @@ Compile and run the realloc function example by following these steps.
 
     The run result is as follows.
 
-    ```text
+    ```output
     old_pointer address: 0xffff921c8174
     new_pointer address: 0xffff921c87ec
     new_pointer test data: 0 1 2 3 4 5 6 7 8 9
@@ -292,7 +292,7 @@ void free(void *p);
 
 See the example of the malloc function.
 
->![](public_sys-resources/icon-note.gif) **NOTE**
+>![icon-note](public_sys-resources/icon-note.gif) **NOTE**
 >The pointer addresses in the examples are subject to the actual run results.
 
 ## Change History

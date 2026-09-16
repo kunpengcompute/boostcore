@@ -8,12 +8,12 @@
 
 | 库文件 | 说明 |
 | ------- | ---- |
-| `libkqmalloc.ptag.so` | 启用指针标记特性的发布版本 |
-| `libkqmalloc.ptag.debug.so` | 启用指针标记、断言和double free()检查等功能的调试版本 |
-| `libkqmalloc.ptag.profiler.so` | 启用指针标记和内存分析功能的分析版本 |
-| `libkqmalloc.so` | 未启用指针标记特性的发布版本 |
-| `libkqmalloc.debug.so` | 未启用指针标记特性，启用断言和double free()检查等功能的调试版本 |
-| `libkqmalloc.profiler.so` | 未启用指针标记特性，启用内存分析功能的分析版本 |
+| libkqmalloc.ptag.so | 启用指针标记特性的发布版本 |
+| libkqmalloc.ptag.debug.so | 启用指针标记、断言和double free()检查等功能的调试版本 |
+| libkqmalloc.ptag.profiler.so | 启用指针标记和内存分析功能的分析版本 |
+| libkqmalloc.so | 未启用指针标记特性的发布版本 |
+| libkqmalloc.debug.so | 未启用指针标记特性，启用断言和double free()检查等功能的调试版本 |
+| libkqmalloc.profiler.so | 未启用指针标记特性，启用内存分析功能的分析版本 |
 
 所有动态库均为并行分配器。分配器启动时按单线程模式初始化，检测到第二个线程后自动切换为多线程模式；该模式不可通过环境变量显式指定。未启用指针标记特性的版本适用于内核不支持指针标记的系统，或自身使用指针标记的应用（如Go、Java）。
 
@@ -26,7 +26,7 @@ LD_PRELOAD="$kqmalloc_root/HIP09/lib/libkqmalloc.ptag.so" ./run_your_application
 
 ## 环境变量
 
-如[**表1** KQMalloc库环境变量说明](#KQMalloc库环境变量说明)所示，KQMalloc支持以下环境变量。表中按单线程模式和多线程模式区分的默认值由分配器根据运行状态自动选择。
+如[表1 KQMalloc库环境变量说明](#KQMalloc库环境变量说明)所示，KQMalloc支持以下环境变量。表中按单线程模式和多线程模式区分的默认值由分配器根据运行状态自动选择。
 
 **表1** KQMalloc库环境变量说明<a id="KQMalloc库环境变量说明"></a>
 
