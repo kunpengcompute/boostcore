@@ -32,7 +32,7 @@ LD_PRELOAD="$kqmalloc_root/HIP09/lib/libkqmalloc.ptag.so" ./run_your_application
 
 | 变量名称 | 说明 | 默认值 | 可选值 |
 |---------|------|-------|-------|
-| KQMALLOC_ALIGNMENT | 设置对象地址的对齐大小，单位为字节。无效值将被忽略 | 单线程模式为4；多线程模式为16 | 4、8、16、32、64；缓存行为128字节时还支持128 |
+| KQMALLOC_ALIGNMENT | 设置对象地址的对齐大小，单位为字节。无效值将被忽略 | 单线程模式为4；多线程模式为16 | 4、8、16、32、64；缓存行是128字节时还支持128 |
 | KQMALLOC_C11_COMPLIANT_PROCESSES | 设置强制使用C11兼容的16字节指针对齐的进程列表，并影响KQMALLOC_ALIGNMENT的默认值 | java | 以":"分隔的进程名列表，如java8:java15 |
 | KQMALLOC_SLAB_CACHE_RATIO | 设置分配器为提升性能可缓存的slab最大空间比例 | 20 | 0-100 |
 | KQMALLOC_LOCAL_CACHE_RATIO | 设置每个大小级别的线程本地微小对象和小对象缓存的相对大小，可增大或减小本地缓存 | 100.0 | 0.0-1000.0 |

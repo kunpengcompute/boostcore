@@ -2,12 +2,10 @@
 
 ## Latest News
 
+- \[2026.09.30 \]：Released kqmalloc V0.22 to the system library.
 - \[2026-03-30\]: Added protobuf and sonic-cpp to the system library.
-
-- \[2025-12-30\]: Added KACC_JSON to the system library and KACC_cropto to the encryption and decryption library.
-
+- \[2025-12-30\]: Added KACC_JSON to the system library and KACC_crypto to the encryption and decryption library.
 - \[2025-06-30\]: Added the Kunpeng Unified Acceleration Framework (KUAF).
-
 - \[2024-02-22\]: Released Kunpeng Accelerator Engine (KAE) 2.0.
 
 ## Project Introduction

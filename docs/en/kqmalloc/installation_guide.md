@@ -121,4 +121,4 @@ libkqmalloc.ptag.so => /path/to/kqmalloc-vX.Y.Z/HIP09/lib/libkqmalloc.ptag.so (0
 
 |Document Version|Date|Description|
 |--|--|--|
-|01|2026-09-30|This is the third official release.|
+|01|2026-09-30|This is the first official release.|

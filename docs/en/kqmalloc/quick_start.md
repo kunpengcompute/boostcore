@@ -106,4 +106,4 @@ Results depend on CPU, OS, workload, thread binding, and environment variable co
 
 |Document Version|Date|Description|
 |--|--|--|
-|01|2026-09-30|This is the third official release.|
+|01|2026-09-30|This is the first official release.|

@@ -104,7 +104,7 @@ Visit the [open-source repository](https://gitcode.com/boostkit/boostcore/blob/m
 
 - Significantly improved single-threaded library performance.
 
-- Redesigned the heap tag buffer: the original three-dimensional array [NUMA node][rank][storage unit] was changed to a one-dimensional array [offset + storage unit].
+- Redesigned the heap tag buffer: the original three-dimensional array NUMA node(rank)(storage unit) was changed to a one-dimensional array (offset + storage unit).
 
 - Optimized the high-frequency allocation logic for large objects up to 64 MB, adapting to MySQL-like workloads.
 
