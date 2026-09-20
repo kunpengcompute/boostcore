@@ -1,9 +1,83 @@
 # 版本说明书
 
+## 版本配套说明
+
+### 产品版本信息
+
+<a name="table62675726"></a>
+
+<table><tbody><tr id="row41561572"><th class="firstcol" valign="top" width="42.17%" id="mcps1.1.3.1.1"><p id="p11044137"><a name="p11044137"></a><a name="p11044137"></a>产品名称</p>
+</th>
+<td class="cellrowborder" valign="top" width="57.830000000000005%" headers="mcps1.1.3.1.1 "><p id="p15977216939713"><a name="p15977216993713"></a><a name="p1597721693713"></a>Kunpeng BoostKit</p>
+</td>
+</tr>
+<tr id="row924726251"><th class="firs9tcol" valign="top" width="42.17%" id="mcps19.1.3.2.1"><p id="p566699300"><a name="p566699300"></a><a name="p566699300"></a>产品版本</p>
+</th>
+<td class="cellrowborder" valign="top" width="57.830000000000005%" headers="mcps1.1.3.2.1 "><p id="p11923034"><a name="p11923034"></a><a name="p11923034"></a><span id="text14311218114"><a name="text14311218114"></a><a name="text14311218114"></a>26.2.RC1</span></p>
+</td>
+</tr>
+<tr id="row19308119171892"><th class="firstcol" valign="top" width="42.17%" id="mcps1.1.3.3.1"><p id="p2030912172097"><a name="p2030912172097"></a><a name="p2030912172097"></a>软件名称</p>
+</th>
+<td class="cellrowborder" valign="top" width="57.830000000000005%" headers="mcps1.1.3.3.1 "><p id="p1730912179911"><a name="p1730912179911"></a><a name="p17309912179911"></a><span id="text171910917111119"><a name="text17191017111119"></a><a name="text17191017111119"></a>kqmalloc</span></p>
+</td>
+</tr>
+<tr id="row199308111718"><th class="firstcol" valign="top" width="42.17%" id="mcps1.1.3.3.1"><p id="p20390912172097"><a name="p2030912172097"></a><a name="p2030912172097"></a>软件版本</p>
+</th>
+<td class="cellrowborder" valign="top" width="57.830000000000005%" headers="mcps1.1.3.3.1 "><p id="p17309121799911"><a name="p1730912179911"></a><a name="p1730912179911"></a><span id="text171919017111119"><a name="text17191017111119"></a><a name="text17191017111119"></a>V0.22</span></p>
+</td>
+</tr>
+</tbody>
+</table>
+
+### 操作系统、编译器和CPU配套说明
+
+| 操作系统 | CPU类型 | 编译器 |
+| ------------------------- | --------- | ------------------ |
+| openEuler 20.03 LTS SP1 | 鲲鹏处理器 | GCC 7.3.0 / BiSheng 4.2.0 |
+| openEuler 22.03 LTS SP3 | 鲲鹏处理器 | GCC 10.3.1 / BiSheng 4.2.0 |
+| openEuler 24.03 LTS SP3 | 鲲鹏处理器 | GCC 12.3.1 / clang 14.0.6 |
+
+## 版本使用注意事项
+
+版本详细使用注意事项请参见《[安装指南](./installation_guide.md)》。
+
 ## V0.22
+
+### 更新说明
 
 - 大幅提升aligned_alloc()、memalign()、posix_memalign()、valloc()和pvalloc()系列函数的性能。
 - 新增KQMALLOC_ALIGNED_LOCAL_THRESHOLD、KQMALLOC_LOCAL_CACHE_LOW和KQMALLOC_ALIGNED_LOCAL_CACHE_LOW环境变量。
+
+**修改特性<a name="zh-cn_topic_0000002518399190_section16450949161512"></a>**
+
+无
+
+**删除特性<a name="zh-cn_topic_0000002518399190_section9218125814159"></a>**
+
+无
+
+### 已解决的问题
+
+无
+
+### 遗留问题
+
+无
+
+## 版本配套文档
+
+### V0.22版本配套文档
+
+|文档名称|内容简介|交付形式|
+|--|---|---|
+|《版本说明书》|本文档提供kqmalloc的版本发布信息。|开源仓|
+|《安装指南》|本文档提供kqmalloc的安装使用指导。|开源仓|
+|《快速入门》|本文档提供kqmalloc推理优化特性快速入门指导。|开源仓|
+|《API参考》|本文档提供kqmalloc推理优化特性API使用说明。|开源仓|
+
+### 获取文档的方法
+
+您可以通过访问[开源仓](https://gitcode.com/boostkit/boostcore/blob/master/docs/zh/kqmalloc/README.md)浏览和获取相关文档。
 
 ## V0.21
 

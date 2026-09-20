@@ -14,7 +14,7 @@ To use KQMalloc smoothly and securely, ensure that your environment is one of th
 
 Download a required openEuler version from [Download Center](https://www.openeuler.openatom.cn/en/download/?archive=true).
 
->![](public_sys-resources/icon-notice.gif) **NOTICE**
+>![icon-note](public_sys-resources/icon-notice.gif) **NOTICE**
 >
 >- KQMalloc currently supports only Kunpeng processors. When KQMalloc is used on other processors, it exits abnormally. If KQMalloc is loaded dynamically, the program exits when linking KQMalloc, causing undefined results.
 >- KQMalloc does not support GCC versions earlier than 7.3.0.
@@ -57,7 +57,7 @@ echo madvise > /sys/kernel/mm/transparent_hugepage/defrag
 
 If THP has been successfully enabled, the following status is displayed.
 
-```text
+```output
 [root@localhost ~]# cat /sys/kernel/mm/transparent_hugepage/enabled
 [always] madvise never
 [root@localhost ~]# cat /sys/kernel/mm/transparent_hugepage/defrag
@@ -105,7 +105,7 @@ LD_PRELOAD="$kqmalloc_root/HIP09/lib/libkqmalloc.ptag.so" ldd ./run_your_applica
 
 The normal output should include the KQMalloc dynamic library, as shown in the following example.
 
-```text
+```output
 libkqmalloc.ptag.so => /path/to/kqmalloc-vX.Y.Z/HIP09/lib/libkqmalloc.ptag.so (0x0000ffff6dac0000)
 ```
 
@@ -121,4 +121,4 @@ libkqmalloc.ptag.so => /path/to/kqmalloc-vX.Y.Z/HIP09/lib/libkqmalloc.ptag.so (0
 
 |Document Version|Date|Description|
 |--|--|--|
-|01|2026-09-30|This is the third official release.|
+|01|2026-09-30|This is the first official release.|

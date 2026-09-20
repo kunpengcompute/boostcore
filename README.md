@@ -2,8 +2,9 @@
 
 ## 最新消息
 
+- \[2026.09.30 \]：系统库kqmalloc发布V0.22版本。
 - \[2026.03.30 \]：系统库新增protobuf、sonic-cpp。
-- \[2025.12.30 \]：系统库新增KACC_JSON；加解密库新增KACC_cropto。-->
+- \[2025.12.30 \]：系统库新增KACC_JSON；加解密库新增KACC_crypto。
 - \[2025.06.30 \]：新增KUAF鲲鹏统一加速框架。
 - \[2024.02.22 \]：KAE鲲鹏加速引擎发布2.0版本。
 
@@ -85,7 +86,7 @@ BoostCore基础加速面向主流应用场景，提供OS及系统软件等基础
 
 | 子库 | 描述 |
 | :--- | :--- |
-| [ISA-L](https://gitcode.com/boostkit/isa-l) | ISA-L是开源的高性能存储算法库，在开源基础上，通过使用NEON/SVE指令指令、内存预期等手段进一步纠删码、优化循环冗余检查（CRC）。 |
+| [ISA-L](https://gitcode.com/boostkit/isa-l) | ISA-L是开源的高性能存储算法库，在开源基础上，通过使用NEON/SVE指令、内存预期等手段进一步纠删码、优化循环冗余检查（CRC）。 |
 | [KAE使能SPDK](https://gitcode.com/boostkit/spdk) | SPDK的BDEV设备作为虚拟设备层对接底层多种设备类型（虚拟设备、物理设备），通过在BDEV设备中使能压缩和加解密能够支持所有SPDK设备。 |
 
 <!--

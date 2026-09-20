@@ -14,11 +14,11 @@
 
 openEuler操作系统[获取链接](https://www.openeuler.openatom.cn/zh/download/?archive=true)。
 
->![](public_sys-resources/icon-notice.gif) **说明：**
+>![表示说明的图片](public_sys-resources/icon-notice.gif) **说明：**
 >
 >- KQMalloc目前只支持鲲鹏处理器，其他处理器使用KQMalloc时会异常退出。如果以动态方式加载KQMalloc库，程序会在链接KQMalloc时退出，造成未定义的结果。
 >- KQMalloc不支持GCC 7.3.0以下版本。
->- KQMalloc为底层原语库，计算流程涉及内存读写、分配等操作。KQMalloc不提供和发布操作系统，操作系统须用户自行安装。用户需要结合自身应用完成操作系统安全加固，包括不安装或者移除不必要的应用等。
+>- KQMalloc为底层原语库，计算流程涉及内存读写、分配等操作。KQMalloc不提供操作系统，操作系统须用户自行安装。用户需要结合自身应用完成操作系统安全加固，包括不安装或者移除不必要的应用等。
 
 ## 获取软件包
 
@@ -34,12 +34,12 @@ openEuler操作系统[获取链接](https://www.openeuler.openatom.cn/zh/downloa
 
 | 库文件 | 说明 |
 | ------- | ---- |
-| `libkqmalloc.ptag.so` | 启用指针标记特性的发布版本 |
-| `libkqmalloc.ptag.debug.so` | 启用指针标记、断言和double free()检查等功能的调试版本 |
-| `libkqmalloc.ptag.profiler.so` | 启用指针标记和内存分析功能的分析版本 |
-| `libkqmalloc.so` | 未启用指针标记特性的发布版本 |
-| `libkqmalloc.debug.so` | 未启用指针标记特性，启用断言和double free()检查等功能的调试版本 |
-| `libkqmalloc.profiler.so` | 未启用指针标记特性，启用内存分析功能的分析版本 |
+| libkqmalloc.ptag.so | 启用指针标记特性的发布版本 |
+| libkqmalloc.ptag.debug.so | 启用指针标记、断言和double free()检查等功能的调试版本 |
+| libkqmalloc.ptag.profiler.so | 启用指针标记和内存分析功能的分析版本 |
+| libkqmalloc.so | 未启用指针标记特性的发布版本 |
+| libkqmalloc.debug.so | 未启用指针标记特性，启用断言和double free()检查等功能的调试版本 |
+| libkqmalloc.profiler.so | 未启用指针标记特性，启用内存分析功能的分析版本 |
 
 以上动态库均为并行分配器。分配器启动时按单线程模式初始化，检测到第二个线程后自动切换为多线程模式。未启用指针标记特性的版本适用于内核不支持指针标记的系统，或自身使用指针标记的应用（如Go、Java）。内存分析文件保存在`/tmp/kqmalloc_<进程名>_CPU<cpu_id>_<ticks>.txt`。
 
@@ -55,7 +55,7 @@ echo madvise > /sys/kernel/mm/transparent_hugepage/defrag
 
 若系统已成功开启透明大页，将显示如下状态。
 
-```text
+```output
 [root@localhost ~]# cat /sys/kernel/mm/transparent_hugepage/enabled
 [always] madvise never
 [root@localhost ~]# cat /sys/kernel/mm/transparent_hugepage/defrag
@@ -103,7 +103,7 @@ LD_PRELOAD="$kqmalloc_root/HIP09/lib/libkqmalloc.ptag.so" ldd ./run_your_applica
 
 正常输出中应包含KQMalloc动态库，示例如下。
 
-```text
+```output
 libkqmalloc.ptag.so => /path/to/kqmalloc-vX.Y.Z/HIP09/lib/libkqmalloc.ptag.so (0x0000ffff6dac0000)
 ```
 

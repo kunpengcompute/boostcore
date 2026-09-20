@@ -1,5 +1,7 @@
 # KQMalloc Introduction
 
+English|[简体中文](../../zh/kqmalloc/README.md)
+
 ## Latest News
 
 - \[2026-09-30 \]: Released KQMalloc V0.22, which significantly improves the performance of aligned allocation functions such as aligned_alloc(), as well as valloc() and pvalloc(), for Kunpeng 930; added an aligned-object local cache threshold and two types of local cache low-watermark configurations to reduce allocation overhead.
@@ -37,7 +39,7 @@ The installation guide for the KQMalloc memory allocator, including how to obtai
 
 The quick start guide for the KQMalloc memory allocator, including environment variables and acceleration examples. For details, see [Quick Start](./quick_start.md).
 
-## Documentation
+## Learning Documents
 
 | Resource Name | Resource Introduction |
 | ------------ | ------------ |
@@ -57,3 +59,7 @@ This directory provides the supporting documentation for the KQMalloc precompile
 ## License
 
 The documents of this project are licensed under CC-BY 4.0. For details, see [LICENSE](LICENSE).
+
+## Acknowledgments
+
+Thank you for every PR from the community. We welcome your contributions to kqmalloc!
