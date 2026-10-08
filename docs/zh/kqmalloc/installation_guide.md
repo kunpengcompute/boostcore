@@ -14,7 +14,7 @@
 
 openEuler操作系统[获取链接](https://www.openeuler.openatom.cn/zh/download/?archive=true)。
 
->![表示说明的图片](public_sys-resources/icon-notice.gif) **说明：**
+>![表示说明的图片](./public_sys-resources/icon-note.gif) **说明：**
 >
 >- KQMalloc目前只支持鲲鹏处理器，其他处理器使用KQMalloc时会异常退出。如果以动态方式加载KQMalloc库，程序会在链接KQMalloc时退出，造成未定义的结果。
 >- KQMalloc不支持GCC 7.3.0以下版本。

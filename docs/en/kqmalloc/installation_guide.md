@@ -14,7 +14,7 @@ To use KQMalloc smoothly and securely, ensure that your environment is one of th
 
 Download a required openEuler version from [Download Center](https://www.openeuler.openatom.cn/en/download/?archive=true).
 
->![icon-note](public_sys-resources/icon-notice.gif) **NOTICE**
+>![icon-note](./public_sys-resources/icon-note.gif) **Note:**
 >
 >- KQMalloc currently supports only Kunpeng processors. When KQMalloc is used on other processors, it exits abnormally. If KQMalloc is loaded dynamically, the program exits when linking KQMalloc, causing undefined results.
 >- KQMalloc does not support GCC versions earlier than 7.3.0.
@@ -36,12 +36,12 @@ The decompressed directory is organized by processor models. The `lib` subdirect
 
 | Library File | Description |
 | ------- | ---- |
-| `libkqmalloc.ptag.so` | Release version with the pointer tagging feature enabled |
-| `libkqmalloc.ptag.debug.so` | Debug version with the pointer tagging feature, assertions, and double free() checks enabled |
-| `libkqmalloc.ptag.profiler.so` | Profiler version with the pointer tagging feature and memory profiling enabled |
-| `libkqmalloc.so` | Release version with the pointer tagging feature disabled |
-| `libkqmalloc.debug.so` | Debug version with the pointer tagging feature disabled and assertions and double free() checks enabled |
-| `libkqmalloc.profiler.so` | Profiler version with the pointer tagging feature disabled and memory profiling enabled |
+| libkqmalloc.ptag.so | Release version with the pointer tagging feature enabled |
+| libkqmalloc.ptag.debug.so | Debug version with the pointer tagging feature, assertions, and double free() checks enabled |
+| libkqmalloc.ptag.profiler.so | Profiler version with the pointer tagging feature and memory profiling enabled |
+| libkqmalloc.so | Release version with the pointer tagging feature disabled |
+| libkqmalloc.debug.so | Debug version with the pointer tagging feature disabled and assertions and double free() checks enabled |
+| libkqmalloc.profiler.so | Profiler version with the pointer tagging feature disabled and memory profiling enabled |
 
 All the dynamic libraries above are parallel allocators. When the allocator starts, it is initialized in single-threaded mode and automatically switches to multi-threaded mode after a second thread is detected. Versions with the pointer tagging feature disabled are suitable for systems whose kernels do not support pointer tagging, or for apps that use pointer tagging themselves (such as Go and Java). Memory profiling files are saved in `/tmp/kqmalloc_<process_name>_CPU<cpu_id>_<ticks>.txt`.
 
