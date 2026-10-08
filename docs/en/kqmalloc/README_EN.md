@@ -4,7 +4,7 @@ English|[简体中文](../../zh/kqmalloc/README.md)
 
 ## Latest News
 
-- \[2026-09-30 \]: Released KQMalloc V0.22, which significantly improves the performance of aligned allocation functions such as aligned_alloc(), as well as valloc() and pvalloc(), for Kunpeng 930; added an aligned-object local cache threshold and two types of local cache low-watermark configurations to reduce allocation overhead.
+- [2026-09-30]: Released KQMalloc V0.22, which significantly improves the performance of aligned allocation functions such as aligned_alloc(), as well as valloc() and pvalloc(), for Kunpeng 930; added an aligned-object local cache threshold and two types of local cache low-watermark configurations to reduce allocation overhead.
 
 ## Project Introduction
 
