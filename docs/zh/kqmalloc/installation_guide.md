@@ -52,11 +52,11 @@ KQMalloc通过优化标准库中的内存相关函数，只需使用预加载方
 以鲲鹏HIP12的多线程场景为例：
 
 ```shell
-export LD_PRELOAD=/<path to KQMalloc>/build/HIP12/lib/libkqmallocmt.so
+export LD_PRELOAD=/<path to KQMalloc>/HIP12/lib/libkqmallocmt.so
 ```
 
 同样，可以在GCC编译选项中添加动态库所在路径，链接需要使用的动态库文件。
-例如，若需要使用适配HIP12的KQMalloc请在编译时添加：**-L/<KQMalloc路径>/build/HIP12/lib/ -lkqmallocmt -Wl,-rpath=/<KQMalloc路径>/build/HIP12/lib/**。
+例如，若需要使用适配HIP12的KQMalloc请在编译时添加：**-L/<KQMalloc路径>/HIP12/lib/ -lkqmallocmt -Wl,-rpath=/<KQMalloc路径>/HIP12/lib/**。
 
 ### 验证KQMalloc
 
@@ -65,7 +65,7 @@ export LD_PRELOAD=/<path to KQMalloc>/build/HIP12/lib/libkqmallocmt.so
 ```text
 [root@localhost mmpm]# ldd test
         linux-vdso.so.1 (0x0000ffff9ee6a000)
-        /home/kqmalloc/build/HIP12/lib/libkqmallocmt.so (0x0000ffff9b400000)
+        /home/kqmalloc/HIP12/lib/libkqmallocmt.so (0x0000ffff9b400000)
         libmmpm.so => not found
         libstdc++.so.6 => /usr/lib64/libstdc++.so.6 (0x0000ffff9b200000)
         libm.so.6 => /usr/lib64/libm.so.6 (0x0000ffff9b150000)
