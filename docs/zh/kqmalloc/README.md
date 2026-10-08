@@ -1,6 +1,6 @@
 # KQMalloc介绍
 
-简体中文|[English]
+简体中文|[English](../../en/kqmalloc/README_EN.md)
 
 ## 最新消息
 
