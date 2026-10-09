@@ -292,7 +292,7 @@ void free(void *p);
 
 See the example of the malloc function.
 
->![icon-note](public_sys-resources/icon-note.gif) **NOTE**
+>![icon-note](public_sys-resources/icon-note.gif) **Note:**
 >The pointer addresses in the examples are subject to the actual run results.
 
 ## Change History
