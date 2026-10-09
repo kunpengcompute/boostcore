@@ -6,14 +6,14 @@ This document helps users quickly understand how to use the KQMalloc V0.22 preco
 
 For detailed steps on obtaining and extracting the dynamic libraries, see the [Installation Guide](./installation_guide.md). KQMalloc V0.22 provides the following dynamic libraries.
 
-| Library File| Description|
+| Library File | Description |
 | ------- | ------ |
-| `libkqmalloc.ptag.so` | Release version with the pointer tagging feature enabled |
-| `libkqmalloc.ptag.debug.so` | Debug version with pointer tagging, assertions, and double free() checking enabled |
-| `libkqmalloc.ptag.profiler.so` | Profiler version with pointer tagging and memory profiling enabled |
-| `libkqmalloc.so` | Release version with the pointer tagging feature disabled |
-| `libkqmalloc.debug.so` | Debug version with the pointer tagging feature disabled, with assertions and double free() checking enabled |
-| `libkqmalloc.profiler.so` | Profiler version with the pointer tagging feature disabled, with memory profiling enabled |
+| libkqmalloc.ptag.so | Release version with the pointer tagging feature enabled |
+| libkqmalloc.ptag.debug.so | Debug version with pointer tagging, assertions, and double free() checking enabled |
+| libkqmalloc.ptag.profiler.so | Profiler version with pointer tagging and memory profiling enabled |
+| libkqmalloc.so | Release version with the pointer tagging feature disabled |
+| libkqmalloc.debug.so | Debug version with the pointer tagging feature disabled, with assertions and double free() checking enabled |
+| libkqmalloc.profiler.so | Profiler version with the pointer tagging feature disabled, with memory profiling enabled |
 
 All dynamic libraries are parallel allocators. When the allocator starts, it initializes in single-threaded mode and automatically switches to multi-threaded mode after a second thread is detected; this mode cannot be explicitly specified through an environment variable. Versions with the pointer tagging feature disabled are suitable for systems whose kernels do not support pointer tagging, or for apps that use pointer tagging themselves (such as Go and Java).
 
@@ -31,7 +31,7 @@ KQMalloc supports the following environment variables in [**Table 1** KQMalloc e
 **Table 1** KQMalloc environment variables<a id="kqmalloc-environment-variables"></a>
 
 | Variable Name | Description | Default Value | Value Range |
-|---------|------|-------|-------|
+| --------- | ------ | ------- | ------- |
 | KQMALLOC_ALIGNMENT | Sets the alignment size of object addresses, in bytes. Invalid values are ignored. | 4 in single-threaded mode; 16 in multi-threaded mode | 4, 8, 16, 32, 64; 128 is also supported when the cache line size is 128 bytes. |
 | KQMALLOC_C11_COMPLIANT_PROCESSES | Sets the list of processes forced to use C11-compliant 16-byte pointer alignment, and affects the default value of KQMALLOC_ALIGNMENT. | java | A list of process names separated by ":", such as java8:java15 |
 | KQMALLOC_SLAB_CACHE_RATIO | Sets the maximum ratio of slab space that the allocator can cache to improve performance. | 20 | 0-100 |
