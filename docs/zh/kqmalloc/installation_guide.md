@@ -6,9 +6,16 @@
 
 为保证您可以顺利安全地使用KQMalloc，请确保所使用的环境信息在已验证环境范围内。
 
+> **glibc版本要求：glibc >= 2.34。** 本文所述预编译动态库不支持glibc低于2.34的环境，加载动态库时会报找不到`GLIBC_2.34`符号版本的错误，无法正常使用。
+
+运行应用前，可通过以下命令确认glibc版本。
+
+```shell
+getconf GNU_LIBC_VERSION
+```
+
 | 操作系统 | CPU类型 | 编译器 |
 | ------------------------- | --------- | ------------------ |
-| openEuler 20.03 LTS SP1 | 鲲鹏处理器 | GCC 7.3.0 / BiSheng 4.2.0 |
 | openEuler 22.03 LTS SP3 | 鲲鹏处理器 | GCC 10.3.1 / BiSheng 4.2.0 |
 | openEuler 24.03 LTS SP3 | 鲲鹏处理器 | GCC 12.3.1 / clang 14.0.6 |
 
