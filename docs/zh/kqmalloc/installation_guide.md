@@ -31,7 +31,7 @@ openEuler操作系统[获取链接](https://www.openeuler.openatom.cn/zh/downloa
 
 ## 获取软件包
 
-1. 进入[KQMalloc发布目录](https://repo.boostkit.osinfra.cn/boostcore/kqmalloc/release/)，选择所需版本的子目录。
+1. 进入[KQMalloc发布仓库](https://gitcode.com/boostkit/kqmalloc-release)，选择所需版本的子目录。
 2. 下载版本子目录中的`kqmalloc-vX.Y.Z.tar.gz`压缩包，其中`X.Y.Z`表示版本号。如果下载页面提供校验文件，请按页面说明校验软件包完整性。
 3. 解压压缩包。
 
