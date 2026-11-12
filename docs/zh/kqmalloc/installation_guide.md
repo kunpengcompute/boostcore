@@ -21,7 +21,7 @@ getconf GNU_LIBC_VERSION
 | openEuler 22.03 LTS SP3 | 鲲鹏处理器 | GCC 10.3.1 / BiSheng 4.2.0 |
 | openEuler 24.03 LTS SP3 | 鲲鹏处理器 | GCC 12.3.1 / clang 14.0.6 |
 
-openEuler操作系统[获取链接](https://www.openeuler.openatom.cn/zh/download/?archive=true)。
+[openEuler操作系统获取链接](https://www.openeuler.openatom.cn/zh/download/?archive=true)。
 
 >![表示说明的图片](./public_sys-resources/icon-note.gif) **说明：**
 >

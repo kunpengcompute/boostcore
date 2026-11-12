@@ -1,5 +1,7 @@
 # API参考
 
+本文档介绍KQMalloc内存分配器API参考，涵盖malloc、calloc、realloc和free函数的定义、参数说明、返回值与示例，适用于在鲲鹏处理器上使用KQMalloc进行内存分配的开发者。
+
 ## KQMalloc介绍
 
 KQMalloc是专为鲲鹏处理器设计的内存分配器，适配Linux操作系统4KB和64KB系统页、48位内存虚拟地址的系统场景。KQMalloc使用透明大页等技术减少页表缓冲未命中、缓存碎片和缓存别名。本文档详细介绍malloc、calloc、realloc和free函数。
@@ -59,7 +61,7 @@ int main(void)
 }
 ```
 
-按照以下步骤编译并运行malloc函数示例。
+将上述示例代码保存为run_your_application.c，再按照以下步骤编译并运行malloc函数示例。
 
 1. 编译。
 
@@ -147,7 +149,7 @@ int main(void)
 }
 ```
 
-按照以下步骤编译并运行calloc函数示例。
+将上述示例代码保存，再按照以下步骤编译并运行calloc函数示例。
 
 1. 编译。
 
@@ -241,7 +243,7 @@ int main(void)
 }
 ```
 
-按照以下步骤编译并运行realloc函数示例。
+将上述示例代码保存，再按照以下步骤编译并运行realloc函数示例。
 
 1. 编译。
 
