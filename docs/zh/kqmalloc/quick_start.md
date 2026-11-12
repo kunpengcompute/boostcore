@@ -54,7 +54,8 @@ LD_PRELOAD="$kqmalloc_root/HIP09/lib/libkqmalloc.ptag.so" ./run_your_application
 | KQMALLOC_HEAP_CACHE_RATIO | 设置可缓存的堆头余量占堆峰值大小的最大比例，并受KQMALLOC_HEAP_CACHE_SIZE限制 | 100 | 0-100 |
 | KQMALLOC_DIRTY_THRESHOLD | 设置每个堆中脏页缓存大小上限，单位为兆字节；不包括KQMALLOC_HEAP_CACHE_SIZE控制的堆头余量 | 1024 | 大于等于2 |
 | KQMALLOC_QUICK_CACHE_THRESHOLD | 设置FAST堆内中等对象（约256KB至64MB）的无条件快速缓存阈值，单位为字节 | 缓存行为128字节时为1050624；缓存行为64字节时为1049600 | 大于等于0 |
-| KQMALLOC_EXCLUDE | 设置不使用的对象大小级别，可用于改善对齐并减少缓存未命中 | 单线程模式为"112;224;240"；多线程模式为空字符串 | 以";"分隔的对象大小级别列表 |
+| KQMALLOC_EXCLUDE | 设置不使用的对象大小级别，取值为分配器内部按对象大小划分的档位（单位为字节），可用于改善对齐并减少缓存未命中 | 单线程模式为"112;224;240"；多线程模式为空字符串 | 以";"分隔的字节数列表，空字符串表示不排除任何级别 |
+
 
 ### 环境变量配置示例
 

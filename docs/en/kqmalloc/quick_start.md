@@ -1,5 +1,7 @@
 # Quick Start
 
+<!-- md-trans-meta sourceCommit=b16463e7868fd802f9f6e68f7ae3bdce56322092 translatedAt=2026-10-26T03:11:34.918Z pushedAt=2026-10-28T02:28:50.492Z -->
+
 This document helps users quickly understand how to use the KQMalloc V0.22 precompiled dynamic libraries, their environment variables, and performance verification methods.
 
 ## Installation and Deployment
@@ -26,7 +28,7 @@ LD_PRELOAD="$kqmalloc_root/HIP09/lib/libkqmalloc.ptag.so" ./run_your_application
 
 ## Environment Variables
 
-KQMalloc supports the following environment variables in [**Table 1** KQMalloc environment variables](#kqmalloc-environment-variables). In the table, the default values distinguished by single-threaded mode and multi-threaded mode are automatically selected by the allocator based on its running state.
+KQMalloc supports the following environment variables, as listed in [Table 1 KQMalloc environment variables](#kqmalloc-environment-variables). In the table, the default values distinguished by single-threaded mode and multi-threaded mode are automatically selected by the allocator based on its running state.
 
 **Table 1** KQMalloc environment variables<a id="kqmalloc-environment-variables"></a>
 
@@ -104,6 +106,6 @@ Results depend on CPU, OS, workload, thread binding, and environment variable co
 
 ## Change History
 
-|Document Version|Date|Description|
-|--|--|--|
-|01|2026-09-30|This is the first official release.|
+| Version | Date | Description |
+| --- | --- | --- |
+| 01 | 2026-09-30 | This is the first official release. |
