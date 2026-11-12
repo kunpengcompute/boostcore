@@ -61,7 +61,7 @@ int main(void)
 }
 ```
 
-将上述示例代码保存为run_your_application.c，再按照以下步骤编译并运行malloc函数示例。
+将上述示例代码保存，再按照以下步骤编译并运行malloc函数示例。
 
 1. 编译。
 
