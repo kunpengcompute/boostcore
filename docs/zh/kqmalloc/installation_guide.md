@@ -8,8 +8,8 @@
 
 | 操作系统 | CPU类型 | 编译器 |
 | ------------------------- | --------- | ------------------ |
-| openEuler 20.03 LTS SP1 | 鲲鹏处理器 | GCC 7.3.0 / BiSheng 4.2.0 |
-| openEuler 22.03 LTS SP3 | 鲲鹏处理器 | GCC 10.3.1 / BiSheng 4.2.0 |
+| openEuler 20.03 LTS SP1 | 鲲鹏处理器 | GCC 7.3.0 / 毕昇编译器 4.2.0 |
+| openEuler 22.03 LTS SP3 | 鲲鹏处理器 | GCC 10.3.1 / 毕昇编译器 4.2.0 |
 | openEuler 24.03 LTS SP3 | 鲲鹏处理器 | GCC 12.3.1 / clang 14.0.6 |
 
 [openEuler操作系统获取链接](https://www.openeuler.openatom.cn/zh/download/?archive=true)。
