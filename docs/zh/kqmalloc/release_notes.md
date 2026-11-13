@@ -18,7 +18,7 @@
 </tr>
 <tr id="row19308119171892"><th class="firstcol" valign="top" width="42.17%" id="mcps1.1.3.3.1"><p id="p2030912172097"><a name="p2030912172097"></a><a name="p2030912172097"></a>软件名称</p>
 </th>
-<td class="cellrowborder" valign="top" width="57.830000000000005%" headers="mcps1.1.3.3.1 "><p id="p1730912179911"><a name="p1730912179911"></a><a name="p17309912179911"></a><span id="text171910917111119"><a name="text17191017111119"></a><a name="text17191017111119"></a>kqmalloc</span></p>
+<td class="cellrowborder" valign="top" width="57.830000000000005%" headers="mcps1.1.3.3.1 "><p id="p1730912179911"><a name="p1730912179911"></a><a name="p17309912179911"></a><span id="text171910917111119"><a name="text17191017111119"></a><a name="text17191017111119"></a>KQMalloc</span></p>
 </td>
 </tr>
 <tr id="row199308111718"><th class="firstcol" valign="top" width="42.17%" id="mcps1.1.3.3.1"><p id="p20390912172097"><a name="p2030912172097"></a><a name="p2030912172097"></a>软件版本</p>
@@ -33,8 +33,7 @@
 
 | 操作系统 | CPU类型 | 编译器 |
 | ------------------------- | --------- | ------------------ |
-| openEuler 20.03 LTS SP1 | 鲲鹏处理器 | GCC 7.3.0 / BiSheng 4.2.0 |
-| openEuler 22.03 LTS SP3 | 鲲鹏处理器 | GCC 10.3.1 / BiSheng 4.2.0 |
+| openEuler 22.03 LTS SP3 | 鲲鹏处理器 | GCC 10.3.1 / 毕昇编译器 4.2.0 |
 | openEuler 24.03 LTS SP3 | 鲲鹏处理器 | GCC 12.3.1 / clang 14.0.6 |
 
 ## 版本使用注意事项
@@ -64,21 +63,6 @@
 
 无
 
-## 版本配套文档
-
-### V0.22版本配套文档
-
-|文档名称|内容简介|交付形式|
-|--|---|---|
-|《版本说明书》|本文档提供kqmalloc的版本发布信息。|开源仓|
-|《安装指南》|本文档提供kqmalloc的安装使用指导。|开源仓|
-|《快速入门》|本文档提供kqmalloc推理优化特性快速入门指导。|开源仓|
-|《API参考》|本文档提供kqmalloc推理优化特性API使用说明。|开源仓|
-
-### 获取文档的方法
-
-您可以通过访问[开源仓](https://gitcode.com/boostkit/boostcore/blob/master/docs/zh/kqmalloc/README.md)浏览和获取相关文档。
-
 ## V0.21
 
 - 不再提供独立的单线程动态库。
@@ -88,7 +72,7 @@
 - KQMALLOC_LOCAL_CACHE_RATIO不仅可用于减小本地缓存，也可用于增大本地缓存。
 - 移除KQMALLOC_SINGLE_THREADED环境变量。
 - 实现free_sized()、free_aligned_sized()、valloc()和pvalloc()标准函数。
-- 支持512MB透明大页。
+- 支持512MB透明大页（THP）。
 - KQMALLOC_NUMA_AWARE新增轮询（round-robin）模式。
 
 ## V0.20
@@ -229,3 +213,16 @@
 - 整合代码整洁性反馈。
 - 重命名为KQMalloc。
 - 更好地支持OE平台。
+
+## 版本配套文档
+
+|文档名称|内容简介|交付形式|
+|--|---|---|
+|《版本说明书》|本文档提供KQMalloc的版本发布信息。|开源仓|
+|《安装指南》|本文档提供KQMalloc的安装使用指导。|开源仓|
+|《快速入门》|本文档提供KQMalloc推理优化特性快速入门指导。|开源仓|
+|《API参考》|本文档提供KQMalloc推理优化特性API使用说明。|开源仓|
+
+### 获取文档的方法
+
+您可以通过访问[开源仓](https://gitcode.com/boostkit/boostcore/blob/master/docs/zh/kqmalloc/README.md)浏览和获取相关文档。

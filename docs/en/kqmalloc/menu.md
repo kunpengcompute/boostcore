@@ -3,4 +3,3 @@
 - [Installation Guide](./installation_guide.md)
 - [Quick Start](./quick_start.md)
 - [API Reference](./api_reference.md)
-- [Introduction.md](../../en/kqmalloc/introduction.md)
