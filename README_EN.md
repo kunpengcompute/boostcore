@@ -1,8 +1,10 @@
 # BoostCore Basic Acceleration
 
+<!-- md-trans-meta sourceCommit=fd9b1be0d89b51b20403f4d8574cbb21e1624c23 translatedAt=2026-10-26T03:11:28.074Z pushedAt=2026-10-28T07:14:11.850Z -->
+
 ## Latest News
 
-- \[2026.09.30 \]：Released kqmalloc V0.22 to the system library.
+- \[2026-09-30\]: Released kqmalloc V0.22 to the system library.
 - \[2026-03-30\]: Added protobuf and sonic-cpp to the system library.
 - \[2025-12-30\]: Added KACC_JSON to the system library and KACC_crypto to the encryption and decryption library.
 - \[2025-06-30\]: Added the Kunpeng Unified Acceleration Framework (KUAF).
@@ -48,7 +50,6 @@ This section briefly describes all basic acceleration features included in the B
 | Sub-library | Description |
 | :--- | :--- |
 | KACC_crypto | Align right |
-
 -->
 
 ### KSL (System Library)
@@ -113,7 +114,6 @@ This section briefly describes all basic acceleration features included in the B
 | :--- | :--- |
 | [AcclibBenchmark](https://gitcode.com/boostkit/AcclibBenchmark) | Stores performance test scripts for acceleration libraries. |
 | [AcclibSkills](https://gitcode.com/boostkit/AcclibSkills) | Shares skills that work well during the development and debugging of acceleration libraries. |
-
 -->
 
 ## About the Community
