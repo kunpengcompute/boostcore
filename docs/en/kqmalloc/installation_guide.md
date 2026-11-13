@@ -24,7 +24,8 @@ Download a required openEuler version from [Download Center](https://www.openeul
 
 ## Obtaining the Software Package
 
-1. Go to the [KQMalloc release directory](https://repo.boostkit.osinfra.cn/boostcore/kqmalloc/release/) and select the subdirectory of the required version.
+1. Go to the [KQMalloc release repository](https://gitcode.com/boostkit/kqmalloc-release) and select the subdirectory of the required version.
+
 2. Download the `kqmalloc-vX.Y.Z.tar.gz` package from the subdirectory, where `X.Y.Z` indicates the version number. If the download page provides a checksum file, verify the package integrity as instructed on the page.
 3. Decompress the package.
 
