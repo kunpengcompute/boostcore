@@ -1,18 +1,22 @@
 # KQMalloc Introduction
 
-English|[简体中文](../../zh/kqmalloc/README.md)
+<!-- md-trans-meta sourceCommit=ea47aa22508ae50b2d540a04b43ceba3bd950399 translatedAt=2026-10-26T03:11:39.459Z pushedAt=2026-10-28T03:10:57.113Z -->
+
+[简体中文](../../zh/kqmalloc/README.md) | English
 
 ## Latest News
 
-- [2026-09-30]: Released KQMalloc V0.22, which significantly improves the performance of aligned allocation functions such as aligned_alloc(), as well as valloc() and pvalloc(), for Kunpeng 930; added an aligned-object local cache threshold and two types of local cache low-watermark configurations to reduce allocation overhead.
+- [2026-09-30]: Released KQMalloc V0.22, which significantly improves the performance of aligned allocation functions such as aligned_alloc(), as well as valloc() and pvalloc(), for the Kunpeng 930 processor; added an aligned-object local cache threshold and two types of local cache low-watermark configurations to reduce allocation overhead.
+- [2026-06-30]: Released KQMalloc V0.20, which significantly improves single-threaded and GREAT memory allocation benchmark performance, optimizes high-frequency allocation of large objects up to 64 MB, and reduces memory usage in producer-consumer scenarios; refactored the heap tag buffer, added hierarchical heap caches and Quick Cache threshold configuration, and optimized the dirty page cache threshold configuration.
+- [2026-03-30]: Released KQMalloc V0.19, which significantly improves parallel processing capability and supports thousands of threads and TB-level memory; added support for fork(), malloc_trim(), and aligned allocation up to 128 MB; refactored huge object allocation, improved dirty page thresholds, memory analysis, and debugging capabilities, and unified the binary versions for 64 KB and 2 MB page sizes.
 
 ## Project Introduction
 
 This document applies to KQMalloc V0.22.
 
-KQMalloc is a parallel memory allocator designed specifically for Kunpeng processors, adapted and optimized for system scenarios with 4 KB and 64 KB system page sizes and 48-bit memory virtual addresses under the Linux operating system.
-The allocator runs in single-threaded mode during initialization and automatically switches to multi-threaded mode after a second thread is detected. Starting from V0.21, KQMalloc no longer provides a separate single-threaded dynamic library.
-KQMalloc uses technologies such as transparent huge pages to minimize TLB misses and reduce cache fragmentation and cache aliasing issues.
+KQMalloc is a parallel memory allocator designed specifically for Kunpeng processors, adapted and optimized for Linux operating system scenarios with 4 KB and 64 KB system page sizes and 48-bit virtual memory addresses.
+The allocator runs in single-threaded mode during initialization and automatically switches to multi-threaded mode after detecting a second thread. Starting from V0.21, KQMalloc no longer releases a standalone single-threaded dynamic library.
+KQMalloc uses technologies such as transparent huge pages to minimize TLB misses, reduce cache fragmentation, and mitigate cache aliasing issues.
 
 Applicable scenarios: memory allocation and deallocation
 
@@ -41,7 +45,7 @@ The quick start guide for the KQMalloc memory allocator, including environment v
 
 ## Learning Documents
 
-| Resource Name | Resource Introduction |
+| Document Name | Description |
 | ------------ | ------------ |
 | [Release Notes](./release_notes.md) | Records feature updates, bug fixes, and known limitations of each version. |
 | [Quick Start](./quick_start.md) | Introduces the basic concepts, installation and deployment, usage, and performance verification of KQMalloc to help users get started quickly. |

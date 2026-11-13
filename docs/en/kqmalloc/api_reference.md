@@ -1,10 +1,12 @@
 # API Reference
 
+<!-- md-trans-meta sourceCommit=63d2a1c2fef3f436f4d2148122ad8fb80994c10c translatedAt=2026-10-26T03:11:15.179Z pushedAt=2026-10-28T11:20:59.542Z -->
+
 ## KQMalloc Introduction
 
 KQMalloc is a memory allocator designed for Kunpeng processors and is suitable for Linux environments with 4 KB or 64 KB system page size and 48-bit virtual memory addresses. KQMalloc uses technologies such as transparent huge pages to reduce TLB misses, cache fragmentation, and cache aliasing. This document describes the malloc, calloc, realloc, and free functions in detail.
 
-The following examples use the V0.22 precompiled `libkqmalloc.ptag.so` in the processor directory as an example. Replace `/path/to/kqmalloc-vX.Y.Z` with the actual decompression directory.
+The following uses the V0.22 precompiled `libkqmalloc.ptag.so` in the processor directory as an example. Replace `/path/to/kqmalloc-vX.Y.Z` with the actual decompression directory.
 
 ## Function Introduction
 
@@ -29,7 +31,6 @@ void *malloc(size_t size);
 **Return Value**
 
 - Success: A pointer to the allocated memory is returned.
-
 - Failure: A null pointer is returned.
 
 **Example**
@@ -100,7 +101,7 @@ Compile and run the malloc function example by following these steps.
 
 **Function Description**
 
-Allocates contiguous memory blocks and initializes the memory blocks to 0.
+Allocates contiguous memory blocks and initializes them to 0.
 
 **Function Definition**
 
@@ -118,7 +119,6 @@ void *calloc(size_t number_of_objects, size_t size_of_object);
 **Return Value**
 
 - Success: A pointer to the allocated memory is returned.
-
 - Failure: A null pointer is returned.
 
 **Example**
@@ -177,7 +177,7 @@ Compile and run the calloc function example by following these steps.
 
 **Function Description**
 
-Reallocates memory and preserves the data in the old memory that can fit into the new memory.
+Reallocates memory and preserves as much of the data in the old memory as fits in the new memory.
 
 **Function Definition**
 
@@ -195,7 +195,6 @@ void *realloc(void *old_pointer, size_t new_size);
 **Return Value**
 
 - Success: A pointer to the reallocated memory is returned.
-
 - Failure: A null pointer is returned, and the original memory remains valid.
 
 **Example**
@@ -292,11 +291,11 @@ void free(void *p);
 
 See the example of the malloc function.
 
->![icon-note](public_sys-resources/icon-note.gif) **Note:**
+>![icon-note](public_sys-resources/icon-note.gif) **NOTE:**
 >The pointer addresses in the examples are subject to the actual run results.
 
 ## Change History
 
-|Document Version|Date|Description|
-|--|--|--|
-|01|2026-09-30|This is the first official release.|
+| Version | Date | Description |
+| --- | --- | --- |
+| 01 | 2026-09-30 | This is the first official release. |
