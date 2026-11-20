@@ -1,6 +1,8 @@
 # API Reference
 
-<!-- md-trans-meta sourceCommit=63d2a1c2fef3f436f4d2148122ad8fb80994c10c translatedAt=2026-10-26T03:11:15.179Z pushedAt=2026-10-28T11:20:59.542Z -->
+<!-- md-trans-meta sourceCommit=9fa61b173fd7611c29025519a909923fe1a3bf15 translatedAt=2026-11-18T03:11:28.074Z pushedAt=2026-11-19T07:14:11.850Z -->
+
+This document describes the KQMalloc memory allocator API, covering the definitions, parameter descriptions, return values, and examples of the malloc, calloc, realloc, and free functions. It is intended for developers who use KQMalloc for memory allocation on Kunpeng processors.
 
 ## KQMalloc Introduction
 
@@ -24,9 +26,15 @@ void *malloc(size_t size);
 
 **Parameter Description**
 
-|Parameter|Description|Value Range|Input/Output|
-|--|--|--|--|
-|size|Number of bytes of the requested memory.|The value cannot be negative.|Input|
+| Parameter | Type | Description | Value Range | Input/Output |
+| ------ | ---- | ---- | -------- | --------- |
+| size | size_t | Number of bytes to allocate. | 0 to SIZE_MAX; the actual allocatable size is limited by the implementation and available memory. | Input |
+
+**Usage Constraints**
+
+- When `size` is 0, the behavior is implementation-defined. The function may return NULL or a non-null pointer that cannot be used to access an object; a non-null return value must still be released by calling `free()`.
+- The returned pointer must be checked against NULL before use, and only the memory within the requested size range can be accessed.
+- The alignment of object addresses is affected by the `KQMALLOC_ALIGNMENT` and `KQMALLOC_C11_COMPLIANT_PROCESSES` configurations. For details, see the environment variable descriptions in [Quick Start](./quick_start.md). Before use, ensure that the configurations meet the alignment requirements of the target type. To explicitly specify the alignment, use `aligned_alloc()` or `posix_memalign()` and comply with the parameter constraints of the corresponding interface. Do not assume that a normal allocation is aligned to the cache line or page.
 
 **Return Value**
 
@@ -61,7 +69,7 @@ int main(void)
 }
 ```
 
-Compile and run the malloc function example by following these steps.
+Save the example code above, and then follow the steps below to compile and run the malloc function example.
 
 1. Perform the compilation.
 
@@ -111,10 +119,16 @@ void *calloc(size_t number_of_objects, size_t size_of_object);
 
 **Parameter Description**
 
-|Parameter|Description|Value Range|Input/Output|
-|--|--|--|--|
-|number_of_objects|Number of requested memory blocks.|The value cannot be negative.|Input|
-|size_of_object|Number of bytes of a single memory block.|The value cannot be negative.|Input|
+| Parameter | Type | Description | Value Range | Input/Output |
+| ------ | ---- | ---- | -------- | --------- |
+| number_of_objects | size_t | Number of memory blocks to allocate. | 0 to SIZE_MAX, and the product of this value and `size_of_object` must not overflow `size_t` | Input |
+| size_of_object | size_t | Number of bytes per memory block. | 0 to SIZE_MAX, and the product of this value and `number_of_objects` must not overflow `size_t` | Input |
+
+**Usage Constraints**
+
+- The total number of requested bytes is `number_of_objects * size_of_object`. The actual allocatable size is limited by the implementation and available memory. If the product overflows, the allocation fails and NULL is returned.
+- When either parameter is 0, the behavior is implementation-defined. The function may return NULL or a non-null pointer that cannot be used to access an object; a non-null return value must still be released by calling `free()`.
+- The returned pointer must be checked against NULL before use, and only the memory within the total number of requested bytes can be accessed. The alignment requirements are the same as those of `malloc()`.
 
 **Return Value**
 
@@ -149,7 +163,7 @@ int main(void)
 }
 ```
 
-Compile and run the calloc function example by following these steps.
+Save the example code above, and then follow the steps below to compile and run the calloc function example.
 
 1. Perform the compilation.
 
@@ -187,15 +201,23 @@ void *realloc(void *old_pointer, size_t new_size);
 
 **Parameter Description**
 
-|Parameter|Description|Value Range|Input/Output|
-|--|--|--|--|
-|old_pointer|Pointer to the old memory to be reallocated. If it is NULL, this is equivalent to calling malloc(new_size).|NULL or a valid pointer|Input|
-|new_size|Number of bytes of the reallocated memory.|The value cannot be negative.|Input|
+| Parameter | Type | Description | Value Range | Input/Output |
+| ------ | ---- | ---- | -------- | --------- |
+| old_pointer | void * | Pointer to the old memory block to be reallocated; if it is NULL, this is equivalent to calling `malloc(new_size)`. | NULL, or the start pointer of a memory block returned by a compatible memory allocation interface and not yet freed | Input |
+| new_size | size_t | Number of bytes to allocate for the reallocation. | 0 to SIZE_MAX; the actual allocatable size is limited by the implementation and available memory. | Input |
+
+**Usage Constraints**
+
+- `old_pointer` must not be a pointer that has been freed, an address inside a memory block, or the address of an object on the stack, and must not be used across incompatible allocators.
+- When `new_size` is 0 and `old_pointer` is a valid non-NULL pointer, KQMalloc frees the original memory and returns NULL; the caller must not free or access the memory again. When `old_pointer` is NULL, this is equivalent to calling `malloc(new_size)`. For portability, explicitly call `free()` to free memory, and pass a non-zero value when resizing.
+- Use a temporary pointer to receive the return value, and check it against NULL before use. When `new_size` is not 0 and the allocation fails, the original memory remains valid; on success, use only the returned pointer and stop using the old pointer and its aliases.
+- On success, only the data of the smaller of the original size and `new_size` is retained; the extended portion is uninitialized. The alignment requirements are the same as those of `malloc()`, and no additionally specified alignment is guaranteed to be retained.
 
 **Return Value**
 
 - Success: A pointer to the reallocated memory is returned.
-- Failure: A null pointer is returned, and the original memory remains valid.
+- Failure (`new_size` is not 0): A null pointer is returned, and the original memory remains valid.
+- `new_size` is 0: If `old_pointer` is not NULL, a null pointer is returned, and the original memory has been freed. If `old_pointer` is NULL, the return value is the same as that of malloc(0).
 
 **Example**
 
@@ -243,7 +265,7 @@ int main(void)
 }
 ```
 
-Compile and run the realloc function example by following these steps.
+Save the example code above, and then follow the steps below to compile and run the realloc function example.
 
 1. Perform the compilation.
 
@@ -283,9 +305,14 @@ void free(void *p);
 
 **Parameter Description**
 
-|Parameter|Description|Value Range|Input/Output|
-|--|--|--|--|
-|p|Pointer to the memory to be freed. If it is NULL, no operation is performed.|NULL or a valid pointer|Input|
+| Parameter | Type | Description | Value Range | Input/Output |
+| ------ | ---- | ---- | -------- | --------- |
+| p | void * | Pointer to the memory to be freed; if it is NULL, no operation is performed. | NULL, or the start pointer of a memory block returned by a compatible memory allocation interface and not yet freed | Input |
+
+**Usage Constraints**
+
+- `p` must be compatible with the allocator used for allocation. Do not pass the address of an object on the stack, an address inside a memory block, or a pointer that has been freed.
+- Do not free the same memory twice. After freeing, the original memory must not be accessed through the pointer or its aliases. Setting the current pointer to NULL does not set other aliases to NULL.
 
 **Example**
 
