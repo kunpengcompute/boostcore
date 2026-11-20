@@ -1,6 +1,6 @@
 # Installation Guide
 
-<!-- md-trans-meta sourceCommit=c39c77038c26e9a108abfced9e4b6058250794eb translatedAt=2026-10-26T03:11:16.259Z pushedAt=2026-10-28T11:48:25.924Z -->
+<!-- md-trans-meta sourceCommit=95f1a8b33d2cfc0c201342aa7815ee1130765e6c translatedAt=2026-11-18T03:11:28.074Z pushedAt=2026-11-19T07:14:11.850Z -->
 
 This document describes how to obtain, use, and remove the KQMalloc V0.22 precompiled dynamic library. KQMalloc is delivered as a compressed package, and the dynamic library contained in it can be used directly after decompression.
 
@@ -8,10 +8,19 @@ This document describes how to obtain, use, and remove the KQMalloc V0.22 precom
 
 To use KQMalloc smoothly and securely, ensure that your environment is one of the verified environments.
 
-| Operating System | CPU Type | Compiler |
+>![icon-note](./public_sys-resources/icon-note.gif) **NOTE**
+>
+>**glibc version requirement: glibc 2.34 or later.** The precompiled dynamic library described in this document does not support environments with glibc earlier than 2.34. In such environments, loading the dynamic library reports an error that the `GLIBC_2.34` symbol version cannot be found, and the library cannot be used normally.
+
+Before running the application, you can check the glibc version with the following command.
+
+```shell
+getconf GNU_LIBC_VERSION
+```
+
+| OS | CPU | Compiler |
 | ------------------------- | --------- | ------------------ |
-| openEuler 20.03 LTS SP1 | Kunpeng processor | GCC 7.3.0 / BiSheng 4.2.0 |
-| openEuler 22.03 LTS SP3 | Kunpeng processor | GCC 10.3.1 / BiSheng 4.2.0 |
+| openEuler 22.03 LTS SP3 | Kunpeng processor | GCC 10.3.1 / BiSheng Compiler 4.2.0 |
 | openEuler 24.03 LTS SP3 | Kunpeng processor | GCC 12.3.1 / Clang 14.0.6 |
 
 Download a required openEuler version from [Download Center](https://www.openeuler.openatom.cn/en/download/?archive=true).
@@ -25,7 +34,6 @@ Download a required openEuler version from [Download Center](https://www.openeul
 ## Obtaining the Software Package
 
 1. Go to the [KQMalloc release repository](https://gitcode.com/boostkit/kqmalloc-release) and select the subdirectory of the required version.
-
 2. Download the `kqmalloc-vX.Y.Z.tar.gz` package from the subdirectory, where `X.Y.Z` indicates the version number. If the download page provides a checksum file, verify the package integrity as instructed on the page.
 3. Decompress the package.
 
