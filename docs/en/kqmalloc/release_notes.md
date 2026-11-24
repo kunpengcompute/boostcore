@@ -1,6 +1,6 @@
 # Release Notes
 
-<!-- md-trans-meta sourceCommit=63d2a1c2fef3f436f4d2148122ad8fb80994c10c translatedAt=2026-10-26T03:12:10.503Z pushedAt=2026-10-28T03:53:32.654Z -->
+<!-- md-trans-meta sourceCommit=56d61a2bd9d9f7d67dfa12f2e6e82c90310fa7bd translatedAt=2026-11-18T03:11:28.074Z pushedAt=2026-11-19T07:14:11.850Z -->
 
 ## Version Mapping
 
@@ -20,7 +20,7 @@
 </tr>
 <tr id="row1930811171892"><th class="firstcol" valign="top" width="42.17%" id="mcps1.1.3.3.1"><p id="p2030912172097"><a name="p2030912172097"></a><a name="p2030912172097"></a>Software Name</p>
 </th>
-<td class="cellrowborder" valign="top" width="57.830000000000005%" headers="mcps1.1.3.3.1 "><p id="p1730912179911"><a name="p1730912179911"></a><a name="p1730912179911"></a><span id="text17191017111119"><a name="text17191017111119"></a><a name="text17191017111119"></a>kqmalloc</span></p>
+<td class="cellrowborder" valign="top" width="57.830000000000005%" headers="mcps1.1.3.3.1 "><p id="p1730912179911"><a name="p1730912179911"></a><a name="p1730912179911"></a><span id="text17191017111119"><a name="text17191017111119"></a><a name="text17191017111119"></a>KQMalloc</span></p>
 </td>
 </tr>
 <tr id="row19308111718"><th class="firstcol" valign="top" width="42.17%" id="mcps1.1.3.3.1"><p id="p2030912172097"><a name="p2030912172097"></a><a name="p2030912172097"></a>Software Version</p>
@@ -33,10 +33,11 @@
 
 ### OS, Compiler, and CPU Compatibility
 
-| OS | CPU Type | Compiler |
+The precompiled dynamic library described in this document requires **glibc 2.34 or later**. Environments with glibc earlier than 2.34 are not supported, and the dynamic library cannot be loaded normally in such environments. For the version check method, see [Installation Guide](./installation_guide.md#verified-environments).
+
+| OS | CPU | Compiler |
 | ----------------- | --------- | ------------------ |
-| openEuler 20.03 LTS SP1 | Kunpeng processor | GCC 7.3.0 / BiSheng 4.2.0 |
-| openEuler 22.03 LTS SP3 | Kunpeng processor | GCC 10.3.1 / BiSheng 4.2.0 |
+| openEuler 22.03 LTS SP3 | Kunpeng processor | GCC 10.3.1 / BiSheng Compiler 4.2.0 |
 | openEuler 24.03 LTS SP3 | Kunpeng processor | GCC 12.3.1 / Clang 14.0.6 |
 
 ## Important Notes
@@ -66,21 +67,6 @@ None
 
 None
 
-## Related Documentation
-
-### V0.22 Documentation
-
-|Document Name|Description|Delivery Format|
-|--|---|---|
-|Release Notes|Provides version release information for kqmalloc.|Open-source repository|
-|Installation Guide|Provides installation and usage instructions for kqmalloc.|Open-source repository|
-|Quick Start|Provides a quick start guide for kqmalloc.|Open-source repository|
-|API Reference|Provides API usage instructions for kqmalloc.|Open-source repository|
-
-### Obtaining Documentation
-
-Visit the [open-source repository](https://gitcode.com/boostkit/boostcore/blob/master/docs/en/kqmalloc/README_EN.md) to view or download related documents.
-
 ## V0.21
 
 - The standalone single-threaded dynamic library is no longer provided.
@@ -90,7 +76,7 @@ Visit the [open-source repository](https://gitcode.com/boostkit/boostcore/blob/m
 - KQMALLOC_LOCAL_CACHE_RATIO can be used not only to reduce the local cache, but also to increase it.
 - Removed the KQMALLOC_SINGLE_THREADED environment variable.
 - Implemented the free_sized(), free_aligned_sized(), valloc(), and pvalloc() standard functions.
-- Added support for 512 MB transparent huge pages.
+- Added support for 512 MB transparent huge pages (THP).
 - Added a round-robin mode to KQMALLOC_NUMA_AWARE.
 
 ## V0.20
@@ -229,3 +215,16 @@ Visit the [open-source repository](https://gitcode.com/boostkit/boostcore/blob/m
 - Incorporated code cleanliness feedback.
 - Renamed to KQMalloc.
 - Added better support for the OE platform.
+
+## Related Documentation
+
+|Document Name|Description|Delivery Form|
+|--|---|---|
+|Release Notes|Provides version release information for KQMalloc.|Open-source repository|
+|Installation Guide|Provides installation and usage instructions for KQMalloc.|Open-source repository|
+|Quick Start|Provides a quick start guide for KQMalloc.|Open-source repository|
+|API Reference|Provides API usage instructions for KQMalloc.|Open-source repository|
+
+### Obtaining Documentation
+
+Visit the [open-source repository](https://gitcode.com/boostkit/boostcore/blob/master/docs/en/kqmalloc/README_EN.md) to view or download related documents.
